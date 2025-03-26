@@ -56,7 +56,10 @@ namespace Managers
 
             // listen for app state changes
             onStateChange += OnStateChange;
+        }
 
+        private void Start()
+        {
             // Set initial App State
             SetAppState(AppState.ShowingInitialInstructions);
         }

@@ -15,9 +15,9 @@ namespace Utils {
         private string[] instructions = new string[]
         {
             "Point your camera to a surface to detect an AR plane.",
-            "When a plane is detected, click on it to add objects.",
-            "Click on top of an added object",
-            "Use your fingers to move, rotate and scale the object",
+            "When an AR plane is detected, click on it to add objects.",
+            "Click on top of an added object to interact with it.",
+            "Use your fingers to move, rotate and scale the object.",
         };
 
         private int currentInstructionIndex = 0;
