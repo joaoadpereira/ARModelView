@@ -1,6 +1,8 @@
+using Mono.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
@@ -65,25 +67,28 @@ namespace Managers
                 instance = this;
             }
 
+            // instantiate instructions
+            instructionData = new InstructionData();
+
             // add listners to instructions panel
-            SetPanelButtonListeners();
+            SetInitialPanel();
 
             // set initial hidden state of instructions panel
             instructionsPanel.SetActive(false);
-
-            // instantiate instructions
-            instructionData = new InstructionData();
 
         }
 
         /// <summary>
         ///  Add listners to each instructions button control
         /// </summary>
-        private void SetPanelButtonListeners()
+        private void SetInitialPanel()
         {
+            //Add listners to each instructions button control
             forwardInstructionButton.onClick.AddListener(SetForwardInstruction);
             previousInstructionButton.onClick.AddListener(SetPreviousInstruction);
             closeButton.onClick.AddListener(CloseInstructions);
+
+            ResetInstructionsPanel();
         }
 
 
@@ -124,8 +129,6 @@ namespace Managers
             // show the instructions Panel
             instructionsPanel.SetActive(true);
 
-            // hide previous button since instructions always start in the begging 
-            previousInstructionButton.gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -180,8 +183,24 @@ namespace Managers
             // hide instructions panel
             instructionsPanel.SetActive(false);
 
+            ResetInstructionsPanel();
+        }
+
+        /// <summary>
+        /// Resets the instructions panel to the first instruction
+        /// Hides previous button and shows forward button 
+        /// </summary>
+        private void ResetInstructionsPanel()
+        {
             //reset instructions
             instructionData.ResetInstructions();
+
+            //set instruction data
+            instructionText.text = instructionData.GetCurrentInstruction();
+
+            //reset buttons
+            previousInstructionButton.gameObject.SetActive(false);
+            forwardInstructionButton.gameObject.SetActive(true);
         }
 
         #endregion

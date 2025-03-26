@@ -51,7 +51,16 @@ namespace Utils {
         #region public methods
 
         /// <summary>
-        /// Get the following instruction
+        /// Returns the current instruction
+        /// </summary>
+        /// <returns></returns>
+        public string GetCurrentInstruction()
+        { 
+            return instructions[currentInstructionIndex]; 
+        }
+
+        /// <summary>
+        /// Returns the following instruction
         /// </summary>
         /// <returns></returns>
         public string GetforwardInstruction()
@@ -65,7 +74,7 @@ namespace Utils {
         }
 
         /// <summary>
-        /// Get previous instruction
+        /// Returns previous instruction
         /// </summary>
         /// <returns></returns>
         public string GetPreviousInstruction()
