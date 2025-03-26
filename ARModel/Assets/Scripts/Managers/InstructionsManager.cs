@@ -33,6 +33,10 @@ namespace Managers
         [SerializeField]
         private Button closeButton;
 
+        [Header("Help button")]
+        [SerializeField]
+        private Button helpButton;
+
         private InstructionData instructionData;
        
         #endregion
@@ -82,12 +86,16 @@ namespace Managers
         /// </summary>
         private void SetInitialPanel()
         {
-            //Add listners to each instructions button control
+            // Add listners to each instructions button control
             forwardInstructionButton.onClick.AddListener(SetForwardInstruction);
             previousInstructionButton.onClick.AddListener(SetPreviousInstruction);
-            closeButton.onClick.AddListener(CloseInstructions);
+            closeButton.onClick.AddListener(() => ShowUserInstructionsPanel(false));
 
             ResetInstructionsPanel();
+
+            // Set help button to open panel
+            helpButton.onClick.AddListener(() => ShowUserInstructionsPanel(true));
+
         }
 
 
@@ -103,7 +111,14 @@ namespace Managers
 
                 if (initalButton != null)
                 {
-                    initalButton.onClick.AddListener(ShowUseInstructions);
+                    // When click the button, show panel instructions and hide the initialAppPanel
+                    initalButton.onClick.AddListener(() => 
+                    {
+                        ShowUserInstructionsPanel(true);
+                        
+                        // hide the initialAppPanel
+                        initialAppPanel.SetActive(false);
+                    });
                 }
                 else
                 {
@@ -117,16 +132,25 @@ namespace Managers
         }
 
         /// <summary>
-        /// Hides the initialAppPanel
-        /// Shows the instructions panel
+        /// Sets the user instructions panel
         /// </summary>
-        private void ShowUseInstructions()
+        /// <param name="state"></param>
+        private void ShowUserInstructionsPanel(bool state)
         {
-            // hide the initialAppPanel
-            initialAppPanel.SetActive(false);
-
             // show the instructions Panel
-            instructionsPanel.SetActive(true);
+            instructionsPanel.SetActive(state);
+
+            ResetInstructionsPanel();
+
+            // if instructions panel closes, show help menu
+            if (!state)
+            {
+                helpButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                helpButton.gameObject.SetActive(false);
+            }
 
         }
 
@@ -171,18 +195,6 @@ namespace Managers
                 forwardInstructionButton.gameObject.SetActive(true);
             }
 
-        }
-
-        /// <summary>
-        /// Close the instructions panel
-        /// Reset the instructions order
-        /// </summary>
-        private void CloseInstructions()
-        {
-            // hide instructions panel
-            instructionsPanel.SetActive(false);
-
-            ResetInstructionsPanel();
         }
 
         /// <summary>
