@@ -71,6 +71,7 @@ namespace Managers
             {
                 case AppState.ShowingInitialInstructions:
                     Debug.Log("ShowingInitialInstructions");
+                    InstructionsManager.Instance.HandleInstructions();
                     break;
                 case AppState.Idle:
                     Debug.Log("Idle");
