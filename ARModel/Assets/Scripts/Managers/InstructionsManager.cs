@@ -91,11 +91,10 @@ namespace Managers
             previousInstructionButton.onClick.AddListener(SetPreviousInstruction);
             closeButton.onClick.AddListener(() => ShowUserInstructionsPanel(false));
 
-            ResetInstructionsPanel();
-
             // Set help button to open panel
             helpButton.onClick.AddListener(() => ShowUserInstructionsPanel(true));
 
+            ResetInstructionsPanel();
         }
 
 

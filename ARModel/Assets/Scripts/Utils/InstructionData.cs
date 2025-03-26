@@ -18,6 +18,7 @@ namespace Utils {
             "When an AR plane is detected, click on it to add objects.",
             "Click on top of an added object to interact with it.",
             "Use your fingers to move, rotate and scale the object.",
+            "If you need to open these instructions again, click in the help button."
         };
 
         private int currentInstructionIndex = 0;
