@@ -91,49 +91,33 @@ namespace Managers
             // gets the touches in screen
             var activeTouches = Touch.activeTouches;
             if (activeTouches.Count == 0) return;
-    
-            // only check for one time touch in screen
-            if (activeTouches[0].phase == TouchPhase.Began)
+
+            // only enable interaction with AR objects if canARTouch
+            if (canARTouch)
             {
-                // only enable interaction with AR objects if canARTouch
-                if (canARTouch)
+                // only check for one time touch in screen
+                if (activeTouches[0].phase == TouchPhase.Began)
                 {
                     // check if touched an object
                     bool clickedInObject = CheckForObjectTouch(activeTouches[0]);
 
-                    // if didnt touch any object, then check if it hits an ARPlane
+                    // if didnt touch any object
                     if (!clickedInObject)
                     {
+                        // but an object is selected
+                        if (objectHasBeenSelected)
+                        {
+                            // reset the object selection to non
+                            ResetObjectSelection();
+                            return;
+                        }
+
+                        // tries to hit an AR Plane based on screen touch
                         CheckForARPlaneTouch(activeTouches[0]);
                     }
                     return;
                 }
             }
-
-            // if object has been selected
-            if (objectHasBeenSelected && selectedObject != null)
-            {
-                HandleObjectSelected(selectedObject);
-            }
-        }
-
-        /// <summary>
-        /// Handles the logic when an object is selected
-        /// </summary>
-        /// <param name="objectSelected"></param>
-        private void HandleObjectSelected(GameObject objectSelected)
-        {
-            if (objectSelected == null)
-            {
-                AppManager.Instance.SetAppState(AppState.Idle);
-            }
-
-            // save the original material of selected object
-            originalSelectedObjectMaterial = objectSelected.GetComponent<MeshRenderer>().material;
-            // change the material of the selected object
-            objectSelected.GetComponent<MeshRenderer>().material = selectedMaterial;
-
-
         }
 
         /// <summary>
@@ -151,11 +135,53 @@ namespace Managers
                 GameObject hittedObject = hit.collider.gameObject;
                 if (hittedObject.transform.parent.CompareTag("ObjectToManipulate"))
                 {
-                    SelectObject(hittedObject);
+                    // user touched same object then it should disable its selection
+                    if (hittedObject == selectedObject)
+                    {
+                       ResetObjectSelection();
+                        return true;
+                    }
+
+                    // reset previous selected object material
+                    if (selectedObject != null)
+                    {
+                        selectedObject.GetComponent<MeshRenderer>().material = originalSelectedObjectMaterial;
+                    }
+
+                    // define object selected
+                    selectedObject = hittedObject;
+
+                    // save the original material of selected object
+                    originalSelectedObjectMaterial = selectedObject.GetComponent<MeshRenderer>().material;
+
+                    // change the material of the selected object
+                    selectedObject.GetComponent<MeshRenderer>().material = selectedMaterial;
+
+                    // change state of objectHasBeenSelected
+                    objectHasBeenSelected = true;
+
+                    // change app state to object selected
+                    AppManager.Instance.SetAppState(AppState.ObjectSelected);
+
                     return true;
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Puts the selected object material to its original one
+        /// Resets the selected object
+        /// Changes App state to idle
+        /// </summary>
+        private void ResetObjectSelection()
+        {
+            selectedObject.GetComponent<MeshRenderer>().material = originalSelectedObjectMaterial;
+            selectedObject = null;
+            originalSelectedObjectMaterial = null;
+
+            // change app state to idle
+            AppManager.Instance.SetAppState(AppState.Idle);
         }
 
         /// <summary>
@@ -184,15 +210,6 @@ namespace Managers
             }
         }
 
-        private void SelectObject(GameObject hittedObject)
-        {
-            // define object selected
-            selectedObject = hittedObject;
-
-            // change app state to object selected
-            AppManager.Instance.SetAppState(AppState.ObjectSelected);
-        }
-
         /// <summary>
         /// Enables the user interaction to add objects into planes
         /// Enables user to select objects
@@ -202,7 +219,7 @@ namespace Managers
             bool canAddAndSelectObjects = appState == AppState.Idle;
             bool userSelectedAnObject = appState == AppState.ObjectSelected;
 
-            canARTouch = canAddAndSelectObjects;
+            canARTouch = canAddAndSelectObjects || userSelectedAnObject;
             objectHasBeenSelected = userSelectedAnObject;
         }
 
