@@ -19,10 +19,17 @@ namespace Managers
         private static ARInteractionsManager instance;
 
         // condition to enable AR interaction 
-        private bool canARInteract = false;
+        private bool canARTouch = false;
+
+        // condition case an object has been selected
+        private bool objectHasBeenSelected = false;
 
         // keep track of all objects added into the scene
         List<GameObject> objectsInScene = new List<GameObject>();
+
+        // selected object
+        private GameObject selectedObject;
+        private Material originalSelectedObjectMaterial;
 
         [Header("AR Raycast Manager in scene")]
         [SerializeField]
@@ -31,6 +38,8 @@ namespace Managers
         [Header("Object to Add in AR")]
         [SerializeField]
         private GameObject objectToAR;
+        [SerializeField]
+        private Material selectedMaterial;
 
         #endregion
 
@@ -79,15 +88,15 @@ namespace Managers
 
         private void Update()
         {
-            // only enable interaction with AR objects if canARInteract
-            if (canARInteract)
+            // gets the touches in screen
+            var activeTouches = Touch.activeTouches;
+            if (activeTouches.Count == 0) return;
+    
+            // only check for one time touch in screen
+            if (activeTouches[0].phase == TouchPhase.Began)
             {
-                // gets the touches in screen
-                var activeTouches = Touch.activeTouches;
-                if (activeTouches.Count == 0) return;
-
-                // only check for one time touch in screen
-                if (activeTouches[0].phase == TouchPhase.Began)
+                // only enable interaction with AR objects if canARTouch
+                if (canARTouch)
                 {
                     // check if touched an object
                     bool clickedInObject = CheckForObjectTouch(activeTouches[0]);
@@ -97,17 +106,34 @@ namespace Managers
                     {
                         CheckForARPlaneTouch(activeTouches[0]);
                     }
+                    return;
                 }
+            }
+
+            // if object has been selected
+            if (objectHasBeenSelected && selectedObject != null)
+            {
+                HandleObjectSelected(selectedObject);
             }
         }
 
         /// <summary>
-        /// Controls if user can Place objects or not
+        /// Handles the logic when an object is selected
         /// </summary>
-        /// <param name="status"></param>
-        private void SetObjectPlacing(bool status)
+        /// <param name="objectSelected"></param>
+        private void HandleObjectSelected(GameObject objectSelected)
         {
-            canARInteract = status;
+            if (objectSelected == null)
+            {
+                AppManager.Instance.SetAppState(AppState.Idle);
+            }
+
+            // save the original material of selected object
+            originalSelectedObjectMaterial = objectSelected.GetComponent<MeshRenderer>().material;
+            // change the material of the selected object
+            objectSelected.GetComponent<MeshRenderer>().material = selectedMaterial;
+
+
         }
 
         /// <summary>
@@ -125,7 +151,7 @@ namespace Managers
                 GameObject hittedObject = hit.collider.gameObject;
                 if (hittedObject.transform.parent.CompareTag("ObjectToManipulate"))
                 {
-                    hittedObject.SetActive(false);
+                    SelectObject(hittedObject);
                     return true;
                 }
             }
@@ -158,20 +184,29 @@ namespace Managers
             }
         }
 
-        #endregion
+        private void SelectObject(GameObject hittedObject)
+        {
+            // define object selected
+            selectedObject = hittedObject;
 
-        #region public methods
+            // change app state to object selected
+            AppManager.Instance.SetAppState(AppState.ObjectSelected);
+        }
 
         /// <summary>
         /// Enables the user interaction to add objects into planes
+        /// Enables user to select objects
         /// </summary>
-        public void EnableObjectPlacing(AppState appState)
+        private void EnableObjectPlacing(AppState appState)
         {
-            SetObjectPlacing(appState == AppState.Idle);
+            bool canAddAndSelectObjects = appState == AppState.Idle;
+            bool userSelectedAnObject = appState == AppState.ObjectSelected;
+
+            canARTouch = canAddAndSelectObjects;
+            objectHasBeenSelected = userSelectedAnObject;
         }
 
         #endregion
-
 
     }
 }
