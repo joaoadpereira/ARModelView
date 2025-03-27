@@ -771,7 +771,7 @@ GameObject:
   m_Component:
   - component: {fileID: 887117466}
   m_Layer: 0
-  m_Name: ---Light---
+  m_Name: ---------------Light---------------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -840,7 +840,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1195983239}
   m_Layer: 0
-  m_Name: ---ARHandling---
+  m_Name: ---------------ARHandling---------------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -964,7 +964,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1388949612}
   m_Layer: 0
-  m_Name: ---Manager---
+  m_Name: ---------------Manager---------------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1115,7 +1115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1578718657}
   m_Layer: 0
-  m_Name: ---UI Instructions---
+  m_Name: ---------------UI Instructions------------------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
