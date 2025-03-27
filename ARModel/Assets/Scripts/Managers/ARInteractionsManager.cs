@@ -82,11 +82,21 @@ namespace Managers
             // only enable interaction with AR objects if canARInteract
             if (canARInteract)
             {
-                bool clickedInObject = CheckForObjectTouch();
+                // gets the touches in screen
+                var activeTouches = Touch.activeTouches;
+                if (activeTouches.Count == 0) return;
 
-                if (!clickedInObject)
+                // only check for one time touch in screen
+                if (activeTouches[0].phase == TouchPhase.Began)
                 {
-                    CheckForARPlaneTouch();
+                    // check if touched an object
+                    bool clickedInObject = CheckForObjectTouch(activeTouches[0]);
+
+                    // if didnt touch any object, then check if it hits an ARPlane
+                    if (!clickedInObject)
+                    {
+                        CheckForARPlaneTouch(activeTouches[0]);
+                    }
                 }
             }
         }
@@ -100,68 +110,50 @@ namespace Managers
             canARInteract = status;
         }
 
-        private bool CheckForObjectTouch()
+        /// <summary>
+        /// Checks is a touch in screen and raycasts any hit with an object
+        /// </summary>
+        /// <param name="touch"></param>
+        /// <returns></returns>
+        private bool CheckForObjectTouch(Touch touch)
         {
-            var activeTouches = Touch.activeTouches;
-            if (activeTouches.Count == 0)
+            Ray ray = Camera.main.ScreenPointToRay(touch.screenPosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
             {
-                return false;
-            }
-
-            if (activeTouches[0].phase == TouchPhase.Began)
-            {
-
-                Ray ray = Camera.main.ScreenPointToRay(activeTouches[0].screenPosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))
+                GameObject hittedObject = hit.collider.gameObject;
+                if (hittedObject.transform.parent.CompareTag("ObjectToManipulate"))
                 {
-                    GameObject hittedObject = hit.collider.gameObject;
-                    if (hittedObject.transform.parent.CompareTag("ObjectToManipulate"))
-                    {
-                        hittedObject.SetActive(false);
-                        return true;
-                    }
+                    hittedObject.SetActive(false);
+                    return true;
                 }
             }
-
             return false;
-
         }
 
         /// <summary>
         /// Gets a screen touch and raycasts until it hits in an GameObject
         /// Based on the hit point position, Returns the hit object
         /// </summary>
-        private void CheckForARPlaneTouch()
+        private void CheckForARPlaneTouch(Touch touch)
         {
-            var activeTouches = Touch.activeTouches;
-            if (activeTouches.Count == 0)
+            List<ARRaycastHit> hits = new List<ARRaycastHit>();
+
+            if (aRRaycastManager.Raycast(touch.screenPosition, hits))
             {
-                return;
-            }
+                GameObject hittedGameObject = hits[0].trackable.gameObject;
 
-            if (activeTouches[0].phase == TouchPhase.Began)
-            { 
-                Debug.Log("Screen touch was detected");
-
-                List<ARRaycastHit> hits = new List<ARRaycastHit>();
-
-                if (aRRaycastManager.Raycast(activeTouches[0].screenPosition, hits))
+                // it can hit a plane but it can also hit an instantiated object
+                if (hittedGameObject.GetComponent<ARPlane>() != null)
                 {
-                    GameObject hittedGameObject = hits[0].trackable.gameObject;
+                    Vector3 hitPosePosition = hits[0].pose.position;
 
-                    // it can hit a plane but it can also hit an instantiated object
-                    if (hittedGameObject.GetComponent<ARPlane>() != null)
-                    {
-                        Vector3 hitPosePosition = hits[0].pose.position;
+                    GameObject newObjectAdded = Instantiate(objectToAR);
 
-                        GameObject newObjectAdded = Instantiate(objectToAR);
+                    newObjectAdded.transform.position = hitPosePosition;
 
-                        newObjectAdded.transform.position = hitPosePosition;
-
-                        objectsInScene.Add(newObjectAdded);
-                    }
+                    objectsInScene.Add(newObjectAdded);
                 }
             }
         }
