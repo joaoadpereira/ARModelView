@@ -61,7 +61,7 @@ namespace Managers
         private void Start()
         {
             // Set initial App State
-            SetAppState(AppState.ShowingInitialInstructions);
+            SetAppState(AppState.Initializing);
         }
 
         /// <summary>
@@ -72,9 +72,12 @@ namespace Managers
         {
             switch (appState)
             {
-                case AppState.ShowingInitialInstructions:
-                    Debug.Log("ShowingInitialInstructions");
-                    InstructionsManager.Instance.HandleInstructions();
+                case AppState.Initializing:
+                    Debug.Log("Initializing");
+                    InstructionsManager.Instance.HandleWelcomeApp();
+                    break;
+                case AppState.ShowingInstructions:
+                    Debug.Log("ShowingInstructions");
                     break;
                 case AppState.Idle:
                     Debug.Log("Idle");

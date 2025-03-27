@@ -1,3 +1,4 @@
+using Enums;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -97,7 +98,6 @@ namespace Managers
             ResetInstructionsPanel();
         }
 
-
         /// <summary>
         /// Sets the initial app panel and defines the logic for button click
         /// </summary>
@@ -141,14 +141,21 @@ namespace Managers
 
             ResetInstructionsPanel();
 
-            // if instructions panel closes, show help menu
             if (!state)
             {
+                // show help button if instructions close
                 helpButton.gameObject.SetActive(true);
+
+                // change state to idle 
+                AppManager.Instance.SetAppState(AppState.Idle);
             }
             else
             {
+                // hide help button if instructions panel is active
                 helpButton.gameObject.SetActive(false);
+
+                // change state to showing instructions
+                AppManager.Instance.SetAppState(AppState.ShowingInstructions);
             }
 
         }
@@ -220,7 +227,7 @@ namespace Managers
         /// <summary>
         /// Handle the instructions panel
         /// </summary>
-        public void HandleInstructions()
+        public void HandleWelcomeApp()
         {
             SetInitialAppPanel();
         }

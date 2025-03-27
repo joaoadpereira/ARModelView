@@ -9,7 +9,8 @@ namespace Enums
     /// </summary>
     public enum AppState
     {
-        ShowingInitialInstructions,
+        Initializing,
+        ShowingInstructions,
         Idle,
         PlacingObject,
         ObjectSelected,
