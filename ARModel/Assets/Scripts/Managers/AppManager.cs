@@ -31,6 +31,15 @@ namespace Managers
         }
 
         /// <summary>
+        /// Action to listen for App state change
+        /// </summary>
+        public event Action<AppState> StateChanged
+        { 
+            add { onStateChange += value; } 
+            remove { onStateChange -= value; }
+        }
+
+        /// <summary>
         /// Returns the current App State
         /// </summary>
         public AppState CurrentAppState
