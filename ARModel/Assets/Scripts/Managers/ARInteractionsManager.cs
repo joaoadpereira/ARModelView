@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace Managers 
 { 
@@ -17,8 +18,8 @@ namespace Managers
         #region fields
         private static ARInteractionsManager instance;
 
-        // condition to enable objet placing
-        private bool canPlaceObject = false;
+        // condition to enable AR interaction 
+        private bool canARInteract = false;
 
         // keep track of all objects added into the scene
         List<GameObject> objectsInScene = new List<GameObject>();
@@ -78,10 +79,15 @@ namespace Managers
 
         private void Update()
         {
-            // only enable object placing case canPlaceObject
-            if (canPlaceObject)
+            // only enable interaction with AR objects if canARInteract
+            if (canARInteract)
             {
-                CheckForTouchToAddObject();
+                bool clickedInObject = CheckForObjectTouch();
+
+                if (!clickedInObject)
+                {
+                    CheckForARPlaneTouch();
+                }
             }
         }
 
@@ -91,14 +97,43 @@ namespace Managers
         /// <param name="status"></param>
         private void SetObjectPlacing(bool status)
         {
-            canPlaceObject = status;
+            canARInteract = status;
+        }
+
+        private bool CheckForObjectTouch()
+        {
+            var activeTouches = Touch.activeTouches;
+            if (activeTouches.Count == 0)
+            {
+                return false;
+            }
+
+            if (activeTouches[0].phase == TouchPhase.Began)
+            {
+
+                Ray ray = Camera.main.ScreenPointToRay(activeTouches[0].screenPosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    GameObject hittedObject = hit.collider.gameObject;
+                    if (hittedObject.transform.parent.CompareTag("ObjectToManipulate"))
+                    {
+                        hittedObject.SetActive(false);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+
         }
 
         /// <summary>
-        /// Gets a screen touch and raycasts until it hits in an ARPlane
-        /// Based on the hit point position, it instantiates an object
+        /// Gets a screen touch and raycasts until it hits in an GameObject
+        /// Based on the hit point position, Returns the hit object
         /// </summary>
-        private void CheckForTouchToAddObject()
+        private void CheckForARPlaneTouch()
         {
             var activeTouches = Touch.activeTouches;
             if (activeTouches.Count == 0)
@@ -106,21 +141,29 @@ namespace Managers
                 return;
             }
 
-            Debug.Log("Screen touch was detected");
+            if (activeTouches[0].phase == TouchPhase.Began)
+            { 
+                Debug.Log("Screen touch was detected");
 
-            List<ARRaycastHit> hits = new List<ARRaycastHit>();
+                List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
-            if (aRRaycastManager.Raycast(activeTouches[0].screenPosition, hits))
-            {
-                Vector3 hitPosePosition = hits[0].pose.position;
+                if (aRRaycastManager.Raycast(activeTouches[0].screenPosition, hits))
+                {
+                    GameObject hittedGameObject = hits[0].trackable.gameObject;
 
-                GameObject newObjectAdded = Instantiate(objectToAR);
+                    // it can hit a plane but it can also hit an instantiated object
+                    if (hittedGameObject.GetComponent<ARPlane>() != null)
+                    {
+                        Vector3 hitPosePosition = hits[0].pose.position;
 
-                newObjectAdded.transform.position = hitPosePosition;    
+                        GameObject newObjectAdded = Instantiate(objectToAR);
 
-                objectsInScene.Add(newObjectAdded);
+                        newObjectAdded.transform.position = hitPosePosition;
+
+                        objectsInScene.Add(newObjectAdded);
+                    }
+                }
             }
-
         }
 
         #endregion
