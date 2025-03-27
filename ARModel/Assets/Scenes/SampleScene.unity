@@ -874,6 +874,7 @@ GameObject:
   - component: {fileID: 1341768852}
   - component: {fileID: 1341768856}
   - component: {fileID: 1341768855}
+  - component: {fileID: 1341768857}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -954,6 +955,19 @@ MonoBehaviour:
   m_CameraFloorOffsetObject: {fileID: 0}
   m_RequestedTrackingOriginMode: 0
   m_CameraYOffset: 1.1176
+--- !u!114 &1341768857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341768851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa17d122634046b4a8e23048891fafc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RaycastPrefab: {fileID: 0}
 --- !u!1 &1388949611
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,7 +1010,7 @@ GameObject:
   - component: {fileID: 1468347733}
   - component: {fileID: 1468347732}
   m_Layer: 0
-  m_Name: InteractionsManager
+  m_Name: Interactions Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1014,6 +1028,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbfdbd1c9f379de47bc05fd9374258b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aRRaycastManager: {fileID: 1341768857}
+  objectToAR: {fileID: 8435208427637676620, guid: 167c5c3f3614aba4f845f6871feb5c2c, type: 3}
 --- !u!4 &1468347733
 Transform:
   m_ObjectHideFlags: 0
