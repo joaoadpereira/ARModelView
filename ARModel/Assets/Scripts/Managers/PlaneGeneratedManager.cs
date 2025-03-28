@@ -29,7 +29,7 @@ namespace Managers
         private Material defaultSurfaceMaterial;
 
         // track if device can classify planes
-        private bool supportsClassification = false;
+        private bool deviceSupportsClassification = false;
 
         #endregion
 
@@ -63,12 +63,25 @@ namespace Managers
         // Start is called before the first frame update
         private void Start()
         {
-            // listen to ARPlanes have been added, updated or removed
-            aRPlaneManager.planesChanged += PlanesChanged;
+            if (aRPlaneManager != null)
+            {
+                // listen to ARPlanes have been added, updated or removed
+                aRPlaneManager.planesChanged += PlanesChanged;
 
-            // Define if device can classify ARPlanes automatically
-            //supportsClassification = aRPlaneManager.descriptor.supportsClassification;
+#if !UNITY_EDITOR && PLATFORM_ANDROID || PLATFORM_IOS
+
+                // Define if device can classify ARPlanes automatically
+                deviceSupportsClassification = aRPlaneManager.descriptor.supportsClassification;
+
+#endif    
+            }
+            else
+            {
+                Debug.LogError("ARPlaneManager is not assigned.");
+            }
+
         }
+
 
         /// <summary>
         /// Handles the logic when AR planes have changed (been added, updated or removed)
@@ -87,7 +100,7 @@ namespace Managers
                 PlaneClassification planeClassifiction; 
 
                 // case 
-                if (supportsClassification)
+                if (deviceSupportsClassification)
                 {
                     planeClassifiction = plane.classification;
                 }
