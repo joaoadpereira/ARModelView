@@ -10,6 +10,7 @@ namespace utils
     [RequireComponent(typeof(ARScaleInteractable))]
     [RequireComponent(typeof(ARSelectionInteractable))]
     [RequireComponent(typeof(ARTranslationInteractable))]
+    [RequireComponent(typeof(ARAnnotationInteractable))]
     /// <summary>
     /// Handles the AR object added into the scene
     /// </summary>
@@ -22,6 +23,7 @@ namespace utils
         private ARScaleInteractable aRScaleInteractable;
         private ARSelectionInteractable aRSelectionInteractable;
         private ARTranslationInteractable aRTranslationInteractable;
+        private ARAnnotationInteractable aRAnnotationInteractable;
 
         #endregion
 
@@ -32,7 +34,8 @@ namespace utils
             aRRotationInteractable = GetComponent<ARRotationInteractable>();
             aRScaleInteractable = GetComponent <ARScaleInteractable>();
             aRSelectionInteractable = GetComponent<ARSelectionInteractable>();
-            aRTranslationInteractable = GetComponent<ARTranslationInteractable>();    
+            aRTranslationInteractable = GetComponent<ARTranslationInteractable>();   
+            aRAnnotationInteractable = GetComponent<ARAnnotationInteractable>();
         }
 
         // Start is called before the first frame update
@@ -64,6 +67,7 @@ namespace utils
             aRScaleInteractable.enabled = state;
             aRSelectionInteractable.enabled = state;
             aRTranslationInteractable.enabled = state;
+            aRAnnotationInteractable.enabled = state;   
         }
 
         #endregion
