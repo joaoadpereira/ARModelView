@@ -88,7 +88,7 @@ namespace Managers
 
         private void Update()
         {
-            // gets the touches in screen
+            /*// gets the touches in screen
             var activeTouches = Touch.activeTouches;
             if (activeTouches.Count == 0) return;
 
@@ -117,7 +117,7 @@ namespace Managers
                     }
                     return;
                 }
-            }
+            }*/
         }
 
         /// <summary>
