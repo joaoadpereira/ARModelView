@@ -245,7 +245,7 @@ MonoBehaviour:
   m_XROrigin: {fileID: 1938728111}
   m_ExcludeUITouches: 1
   m_ARSessionOrigin: {fileID: 0}
-  m_PlacementPrefab: {fileID: 8435208427637676620, guid: 167c5c3f3614aba4f845f6871feb5c2c, type: 3}
+  m_PlacementPrefab: {fileID: 0}
   m_FallbackLayerMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1230,7 +1230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbfdbd1c9f379de47bc05fd9374258b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aRRaycastManager: {fileID: 1938728113}
+  aRPlacementInteractable: {fileID: 223974227}
   objectToAR: {fileID: 8435208427637676620, guid: 167c5c3f3614aba4f845f6871feb5c2c, type: 3}
   selectedMaterial: {fileID: 2100000, guid: 03fe7c340ca9b2d46aa25bc860f08350, type: 2}
 --- !u!4 &1468347733

@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
-using TouchPhase = UnityEngine.InputSystem.TouchPhase;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.AR;
+using utils;
 
 namespace Managers 
 { 
@@ -26,14 +27,10 @@ namespace Managers
 
         // keep track of all objects added into the scene
         List<GameObject> objectsInScene = new List<GameObject>();
-
-        // selected object
-        private GameObject selectedObject;
-        private Material originalSelectedObjectMaterial;
-
-        [Header("AR Raycast Manager in scene")]
+        
+        [Header("AR Placement Interactablein scene")]
         [SerializeField]
-        private ARRaycastManager aRRaycastManager;
+        private ARPlacementInteractable aRPlacementInteractable;
 
         [Header("Object to Add in AR")]
         [SerializeField]
@@ -69,145 +66,13 @@ namespace Managers
             }
         }
 
-        private void OnEnable()
-        {
-            // enable enhanced touch support
-            UnityEngine.InputSystem.EnhancedTouch.EnhancedTouchSupport.Enable();
-        }
-
-        private void OnDisable()
-        {
-            // disable enhanced touch support
-            UnityEngine.InputSystem.EnhancedTouch.EnhancedTouchSupport.Disable();
-        }
-
         private void Start()
         {
+            // add method to listen to app state change
             AppManager.Instance.StateChanged += EnableObjectPlacing;
-        }
 
-        private void Update()
-        {
-            /*// gets the touches in screen
-            var activeTouches = Touch.activeTouches;
-            if (activeTouches.Count == 0) return;
-
-            // only enable interaction with AR objects if canARTouch
-            if (canARTouch)
-            {
-                // only check for one time touch in screen
-                if (activeTouches[0].phase == TouchPhase.Began)
-                {
-                    // check if touched an object
-                    bool clickedInObject = CheckForObjectTouch(activeTouches[0]);
-
-                    // if didnt touch any object
-                    if (!clickedInObject)
-                    {
-                        // but an object is selected
-                        if (objectHasBeenSelected)
-                        {
-                            // reset the object selection to non
-                            ResetObjectSelection();
-                            return;
-                        }
-
-                        // tries to hit an AR Plane based on screen touch
-                        CheckForARPlaneTouch(activeTouches[0]);
-                    }
-                    return;
-                }
-            }*/
-        }
-
-        /// <summary>
-        /// Checks is a touch in screen and raycasts any hit with an object
-        /// </summary>
-        /// <param name="touch"></param>
-        /// <returns></returns>
-        private bool CheckForObjectTouch(Touch touch)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(touch.screenPosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                GameObject hittedObject = hit.collider.gameObject;
-                if (hittedObject.transform.parent.CompareTag("ObjectToManipulate"))
-                {
-                    // user touched same object then it should disable its selection
-                    if (hittedObject == selectedObject)
-                    {
-                       ResetObjectSelection();
-                        return true;
-                    }
-
-                    // reset previous selected object material
-                    if (selectedObject != null)
-                    {
-                        selectedObject.GetComponent<MeshRenderer>().material = originalSelectedObjectMaterial;
-                    }
-
-                    // define object selected
-                    selectedObject = hittedObject;
-
-                    // save the original material of selected object
-                    originalSelectedObjectMaterial = selectedObject.GetComponent<MeshRenderer>().material;
-
-                    // change the material of the selected object
-                    selectedObject.GetComponent<MeshRenderer>().material = selectedMaterial;
-
-                    // change state of objectHasBeenSelected
-                    objectHasBeenSelected = true;
-
-                    // change app state to object selected
-                    AppManager.Instance.SetAppState(AppState.ObjectSelected);
-
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Puts the selected object material to its original one
-        /// Resets the selected object
-        /// Changes App state to idle
-        /// </summary>
-        private void ResetObjectSelection()
-        {
-            selectedObject.GetComponent<MeshRenderer>().material = originalSelectedObjectMaterial;
-            selectedObject = null;
-            originalSelectedObjectMaterial = null;
-
-            // change app state to idle
-            AppManager.Instance.SetAppState(AppState.Idle);
-        }
-
-        /// <summary>
-        /// Gets a screen touch and raycasts until it hits in an GameObject
-        /// Based on the hit point position, Returns the hit object
-        /// </summary>
-        private void CheckForARPlaneTouch(Touch touch)
-        {
-            List<ARRaycastHit> hits = new List<ARRaycastHit>();
-
-            if (aRRaycastManager.Raycast(touch.screenPosition, hits))
-            {
-                GameObject hittedGameObject = hits[0].trackable.gameObject;
-
-                // it can hit a plane but it can also hit an instantiated object
-                if (hittedGameObject.GetComponent<ARPlane>() != null)
-                {
-                    Vector3 hitPosePosition = hits[0].pose.position;
-
-                    GameObject newObjectAdded = Instantiate(objectToAR);
-
-                    newObjectAdded.transform.position = hitPosePosition;
-
-                    objectsInScene.Add(newObjectAdded);
-                }
-            }
+            // add Object to instantiate into ARPlacementinteractable
+            aRPlacementInteractable.placementPrefab = objectToAR;
         }
 
         /// <summary>
@@ -221,6 +86,30 @@ namespace Managers
 
             canARTouch = canAddAndSelectObjects || userSelectedAnObject;
             objectHasBeenSelected = userSelectedAnObject;
+
+            // enable or disable interaction with objects 
+            aRPlacementInteractable.enabled = canARTouch;
+
+            // change interaction in every object in scene 
+            foreach(GameObject ARObject in objectsInScene)
+            {
+                ARObject.GetComponent<ARObject>().ChangeObjectInteraction(canARTouch);
+            }
+
+        }
+
+        #endregion
+
+        #region pubblic methods
+
+        /// <summary>
+        /// Handles when an AR object was added in the scene
+        /// </summary>
+        /// <param name="ARObject"></param>
+        public void ObjectAdded(GameObject ARObject)
+        {
+            // add object to objects in scene
+            objectsInScene.Add(ARObject);
         }
 
         #endregion
