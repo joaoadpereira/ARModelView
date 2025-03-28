@@ -920,6 +920,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 709586912}
   m_CullTransparentMesh: 1
+--- !u!1 &768002363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 768002365}
+  - component: {fileID: 768002364}
+  m_Layer: 0
+  m_Name: Plane Generated Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &768002364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768002363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb096d383b6fc234bb727b67584927bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aRPlaneManager: {fileID: 1938728114}
+  wallMaterial: {fileID: 2100000, guid: a7f1c3bb4e920bf44bc511da431d5723, type: 2}
+  tableMaterial: {fileID: 2100000, guid: 47a843ac71d77484f8e268f1890f8482, type: 2}
+  floorMaterial: {fileID: 2100000, guid: fd52fd4dd1a2b454aba6f9c57be9f546, type: 2}
+  defaultSurfaceMaterial: {fileID: 2100000, guid: 95654b0a794f7f140b1a4dc59fd997b7, type: 2}
+--- !u!4 &768002365
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768002363}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &777802152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2580,6 +2629,7 @@ SceneRoots:
   - {fileID: 777802154}
   - {fileID: 1754668571}
   - {fileID: 1468347733}
+  - {fileID: 768002365}
   - {fileID: 1578718657}
   - {fileID: 1633336907}
   - {fileID: 2868436644010094479}
