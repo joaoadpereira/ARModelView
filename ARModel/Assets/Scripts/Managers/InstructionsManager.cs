@@ -22,9 +22,9 @@ namespace Managers
         private InstructionData instructionData;
 
         // control for menu buttons
-        private bool showingARNotes = false;
-        private bool showingAllOBjects = false;
-        private bool physicsActivated = false;
+        private bool showingARNotesMenu = false;
+        private bool showingAllOBjectsMenu = false;
+        private bool physicsActivatedMenu = false;
 
         [Header("Initial App Panel to show")]
         [SerializeField]
@@ -75,6 +75,22 @@ namespace Managers
             } 
         }
 
+        /// <summary>
+        /// Returns if ARNotes menu is activated
+        /// </summary>
+        public bool ShowingARNotes
+        {
+            get { return showingARNotesMenu; }
+        }
+
+        /// <summary>
+        /// Returns if physics menu is activated
+        /// </summary>
+        public bool PhysicsActivated
+        {
+            get { return physicsActivatedMenu; }
+        }
+
         #endregion
 
         #region private methods
@@ -108,7 +124,7 @@ namespace Managers
             seeHideARNotesButton.SetButton(() => OnShowHideArNotesButton());
             seeHideObjectsButton.SetButton(() => OnShowHideObjects());
             enablePhysicsButton.SetButton(() => OnAddRemovePhysicsInObjects());
-            deleteAllButton.SetButton(() => OnDeleteAllObjects());
+            deleteAllButton.SetButton(() => OnDeleteAllObjects(), false);
             seeInstructionsButton.SetButton(() => ShowUserInstructionsPanel(true));
         }
 
@@ -117,8 +133,8 @@ namespace Managers
         /// </summary>
         private void OnShowHideArNotesButton()
         {
-            showingARNotes = !showingARNotes;
-            ARInteractionsManager.Instance.ShowHideARNotes(showingARNotes);
+            showingARNotesMenu = !showingARNotesMenu;
+            ARInteractionsManager.Instance.ShowHideARNotes(showingARNotesMenu);
         }
 
         /// <summary>
@@ -126,8 +142,8 @@ namespace Managers
         /// </summary>
         private void OnShowHideObjects()
         {
-            showingAllOBjects = !showingAllOBjects;
-            ARInteractionsManager.Instance.ShowHideAllObjects(showingAllOBjects);
+            showingAllOBjectsMenu = !showingAllOBjectsMenu;
+            ARInteractionsManager.Instance.ShowHideAllObjects(showingAllOBjectsMenu);
         }
 
         /// <summary>
@@ -135,8 +151,8 @@ namespace Managers
         /// </summary>
         private void OnAddRemovePhysicsInObjects()
         {
-            physicsActivated = !physicsActivated;
-            ARInteractionsManager.Instance.AddRemovePhysicsInObjects(physicsActivated);
+            physicsActivatedMenu = !physicsActivatedMenu;
+            ARInteractionsManager.Instance.AddRemovePhysicsInObjects(physicsActivatedMenu);
         }
 
         /// <summary>

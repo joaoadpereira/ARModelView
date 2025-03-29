@@ -1,6 +1,7 @@
 using Managers;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.AR;
 
@@ -54,7 +55,17 @@ namespace utils
         /// </summary>
         private void ObjectWasInstantiated()
         {
+            // inform this object was created
             ARInteractionsManager.Instance.ObjectAdded(this.gameObject);
+
+            // activate ARNotes if Menu showARNotes is activated
+            ShowHideARNote(InstructionsManager.Instance.ShowingARNotes);
+
+            // add rigidBody if Menu physics is activated
+            if (InstructionsManager.Instance.PhysicsActivated)
+            {
+                transform.AddComponent<Rigidbody>();
+            }
         }
 
         #endregion

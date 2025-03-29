@@ -57,16 +57,19 @@ namespace Utils
         /// Handles icon color case selected or not.
         /// </summary>
         /// <param name="onSelect"></param>
-        public void SetButton(Action onSelect)
+        public void SetButton(Action onSelect, bool keepButtonSelected = true)
         {
             // set onSelect to listen to button click and handles icon color selection
             thisButton.onClick.AddListener(() => {
                 onSelect.Invoke();
 
-                buttonIsSelected = !buttonIsSelected;
+                if (keepButtonSelected)
+                {
+                    buttonIsSelected = !buttonIsSelected;
 
-                Color backgroundColor = buttonIsSelected ? selectedColor : unselectedColor;
-                backgroundRenderer.color = backgroundColor;
+                    Color backgroundColor = buttonIsSelected ? selectedColor : unselectedColor;
+                    backgroundRenderer.color = backgroundColor;
+                }
             });
         }
 
