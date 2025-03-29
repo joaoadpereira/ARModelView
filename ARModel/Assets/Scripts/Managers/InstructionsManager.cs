@@ -18,6 +18,9 @@ namespace Managers
         #region fields
         private static InstructionsManager instance;
 
+        // INstructionsData object
+        private InstructionData instructionData;
+
         [Header("Initial App Panel to show")]
         [SerializeField]
         private GameObject initialAppPanel;
@@ -38,8 +41,20 @@ namespace Managers
         [SerializeField]
         private Button helpButton;
 
-        private InstructionData instructionData;
-       
+        [Header("Menu buttons")]
+        [SerializeField]
+        private ButtonMenu seeHideARNotesButton;
+        [SerializeField]
+        private ButtonMenu seeHideObjectsButton;
+        [SerializeField]
+        private ButtonMenu otherObjectsMenuButton;
+        [SerializeField]
+        private ButtonMenu enablePhysicsButton;
+        [SerializeField]
+        private ButtonMenu deleteAllButton;
+        [SerializeField]
+        private ButtonMenu seeInstructionsButton;
+
         #endregion
 
         #region properties
@@ -74,12 +89,22 @@ namespace Managers
             // instantiate instructions
             instructionData = new InstructionData();
 
-            // add listners to instructions panel
-            SetInitialPanel();
-
             // set initial hidden state of instructions panel
             instructionsPanel.SetActive(false);
 
+        }
+
+        private void Start()
+        {
+            // add listners to instructions panel
+            SetInitialPanel();
+
+            seeHideARNotesButton.SetButton(()=>OnShowHideArNotesButton());
+        }
+
+        private void OnShowHideArNotesButton()
+        {
+            Debug.Log("AR Notes Menu was clicked.");
         }
 
         /// <summary>
