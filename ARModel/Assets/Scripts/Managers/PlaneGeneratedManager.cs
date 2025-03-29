@@ -31,6 +31,13 @@ namespace Managers
         // track if device can classify planes
         private bool deviceSupportsClassification = false;
 
+        // track of floor hight
+        private float floorHight = float.MaxValue;
+        private float thresholdHight = 0.2f;
+
+        // track all planes 
+        private List<ARPlane> allARPlanes = new List<ARPlane>();
+
         #endregion
 
         #region properties
@@ -90,25 +97,29 @@ namespace Managers
         private void PlanesChanged(ARPlanesChangedEventArgs args)
         {
             // handle added new AR planes
-            List<ARPlane> allPlanes = new List<ARPlane> ();
+            allARPlanes = new List<ARPlane> ();
 
-            allPlanes.AddRange(args.added);
-            allPlanes.AddRange (args.updated);
+            // track all ARplane
+            allARPlanes.AddRange(args.added);
+            allARPlanes.AddRange(args.updated);
 
-            foreach (ARPlane plane in allPlanes)
+            // loop every ARPlane
+            foreach (ARPlane plane in allARPlanes)
             {
                 PlaneClassification planeClassifiction; 
 
-                // case 
+                // case device supports automatic detection. If not, try to classify
                 if (deviceSupportsClassification)
                 {
                     planeClassifiction = plane.classification;
                 }
                 else
                 {
+                    // try to classify the plan
                     planeClassifiction = ClassifyThePlan(plane);
                 }
 
+                // change material on ARPlane based on classification
                 switch (planeClassifiction)
                 {
                     case PlaneClassification.Wall:
@@ -136,20 +147,34 @@ namespace Managers
         private PlaneClassification ClassifyThePlan(ARPlane aRPlane)
         {
             PlaneAlignment planeAlignment = aRPlane.alignment;
-            // If the plane classification is vertical, assume as a wall plane
-            if (planeAlignment == PlaneAlignment.Vertical)
+
+            switch (planeAlignment)
             {
-                return PlaneClassification.Wall;
+                case PlaneAlignment.Vertical:
+                    return PlaneClassification.Wall;
+                case PlaneAlignment.HorizontalUp:
+                case PlaneAlignment.HorizontalDown:
+                    // get plane position and hight as y component
+                    Vector3 planePosition = aRPlane.transform.position;
+
+                    // redefine floorHight if a lower plane is found 
+                    if (planePosition.y < floorHight)
+                    {
+                        floorHight = planePosition.y;
+                        return PlaneClassification.Floor;
+                    }
+
+                    // if the plane is inside floor hight threshold, assume that is also a floor 
+                    if (Mathf.Abs(planePosition.y - floorHight) < thresholdHight)
+                    {
+                        return PlaneClassification.Floor;
+                    }
+
+                    // assume all horizontal planes above floor level as table
+                    return PlaneClassification.Table;
+                default:
+                    return PlaneClassification.None;
             }
-
-            Vector3 planeNormal = aRPlane.normal;
-
-            if (Mathf.Abs(planeNormal.y) > Mathf.Abs(planeNormal.x) && Mathf.Abs(planeNormal.y) > Mathf.Abs(planeNormal.z))
-            {
-                return PlaneClassification.Floor;
-            }
-
-            return PlaneClassification.None;
         }
 
         /// <summary>
@@ -161,6 +186,7 @@ namespace Managers
         {
             MeshRenderer meshRenderer = plane.GetComponent<MeshRenderer>();
 
+            // change material array in MeshRender with an array with the given material 
             if (meshRenderer != null)
             {
                 Material[] mats = new Material[1];
