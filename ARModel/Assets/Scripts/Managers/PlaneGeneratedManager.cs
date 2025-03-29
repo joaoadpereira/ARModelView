@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using Utils;
 
 
 namespace Managers 
@@ -76,33 +77,31 @@ namespace Managers
         // Start is called before the first frame update
         private void Start()
         {
-            // only compile and make verification when running on android/ios device
-#if !UNITY_EDITOR && PLATFORM_ANDROID || PLATFORM_IOS
 
             if (aRPlaneManager != null)
             {
                 // listen to ARPlanes have been added, updated or removed
                 aRPlaneManager.planesChanged += PlanesChanged;
-
-                // Define if device can classify ARPlanes automatically
-                deviceSupportsClassification = aRPlaneManager.descriptor.supportsClassification;
             } 
             else
             {
                 Debug.LogError("ARPlaneManager is not assigned.");
             }
+
+            // Define if device can classify ARPlanes automatically
+            deviceSupportsClassification = DeviceProperties.Instance.SupportsPlaneClassification;
+
+            // Define id device supports occlusion
+            deviceSupportsOcclusion = DeviceProperties.Instance.SupportsOcclusion;
+
+            // check if device has AR support
+            bool? supportsAR = null;
+            DeviceProperties.Instance.SupportsAR((support) => { 
+                supportsAR = support; 
+                Debug.Log("SupportsAR: " + supportsAR.ToString()); 
+            });
+
             
-            if (aROcclusionManager != null)
-            {
-                // Define id device supports occlusion
-                deviceSupportsOcclusion = aROcclusionManager.descriptor.environmentDepthImageSupported == Supported.Supported;
-                Debug.Log("deviceSupportsOcclusion: " + deviceSupportsOcclusion.ToString());
-            }
-            else
-            {
-                Debug.LogError("AROclusionManager is not assigned.");
-            }
-#endif
         }
 
 
