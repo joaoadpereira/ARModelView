@@ -85,9 +85,13 @@ namespace Utils
         /// <summary>
         /// Case is necessary to activate button internally
         /// </summary>
-        public void ClickButton(Action onSelect, bool keepButtonSelected = true)
+        public void ClickButton(Action onCLick = null, bool keepButtonSelected = true)
         {
-            onSelect.Invoke();
+            if (onCLick != null)
+            {
+                onCLick.Invoke();
+            }
+            
             ButtonClicked(keepButtonSelected);
         }
 

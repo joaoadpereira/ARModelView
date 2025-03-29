@@ -23,7 +23,7 @@ namespace Managers
 
         // control for menu buttons
         private bool showingARNotesMenu = false;
-        private bool showingAllOBjectsMenu = false;
+        private bool showingAllObjectsMenu = false;
         private bool physicsActivatedMenu = false;
         private bool showingInstructionsMenu = false;
 
@@ -81,6 +81,14 @@ namespace Managers
         }
 
         /// <summary>
+        /// Returns if showingAllOBjectsMenu is activated
+        /// </summary>
+        public bool ShowingAllObjectsMenu
+        {
+            get { return showingAllObjectsMenu; }
+        }
+
+        /// <summary>
         /// Returns if physics menu is activated
         /// </summary>
         public bool PhysicsActivated
@@ -123,6 +131,10 @@ namespace Managers
             enablePhysicsButton.SetButton(() => OnAddRemovePhysicsInObjects());
             deleteAllButton.SetButton(() => OnDeleteAllObjects(), false);
             seeInstructionsButton.SetButton(() => ShowUserInstructionsPanel());
+
+            // start app with menu options activated
+            seeHideARNotesButton.ClickButton(() => OnShowHideArNotesButton());
+            seeHideObjectsButton.ClickButton(() => OnShowHideObjects());
         }
 
         /// <summary>
@@ -139,8 +151,8 @@ namespace Managers
         /// </summary>
         private void OnShowHideObjects()
         {
-            showingAllOBjectsMenu = !showingAllOBjectsMenu;
-            ARInteractionsManager.Instance.ShowHideAllObjects(showingAllOBjectsMenu);
+            showingAllObjectsMenu = !showingAllObjectsMenu;
+            ARInteractionsManager.Instance.ShowHideAllObjects(showingAllObjectsMenu);
         }
 
         /// <summary>

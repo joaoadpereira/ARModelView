@@ -66,6 +66,9 @@ namespace utils
             {
                 transform.AddComponent<Rigidbody>();
             }
+
+            // set active or not if Menu showing objects is activated
+            this.gameObject.SetActive(InstructionsManager.Instance.ShowingAllObjectsMenu);
         }
 
         #endregion
