@@ -18,8 +18,13 @@ namespace Managers
         #region fields
         private static InstructionsManager instance;
 
-        // INstructionsData object
+        // InstructionsData object
         private InstructionData instructionData;
+
+        // control for menu buttons
+        private bool showingARNotes = false;
+        private bool showingAllOBjects = false;
+        private bool physicsActivated = false;
 
         [Header("Initial App Panel to show")]
         [SerializeField]
@@ -99,12 +104,47 @@ namespace Managers
             // add listners to instructions panel
             SetInitialPanel();
 
-            seeHideARNotesButton.SetButton(()=>OnShowHideArNotesButton());
+            // sets logic when menu buttons are clicked
+            seeHideARNotesButton.SetButton(() => OnShowHideArNotesButton());
+            seeHideObjectsButton.SetButton(() => OnShowHideObjects());
+            enablePhysicsButton.SetButton(() => OnAddRemovePhysicsInObjects());
+            deleteAllButton.SetButton(() => OnDeleteAllObjects());
+            seeInstructionsButton.SetButton(() => ShowUserInstructionsPanel(true));
         }
 
+        /// <summary>
+        /// Shows or hides the ARNotes
+        /// </summary>
         private void OnShowHideArNotesButton()
         {
-            Debug.Log("AR Notes Menu was clicked.");
+            showingARNotes = !showingARNotes;
+            ARInteractionsManager.Instance.ShowHideARNotes(showingARNotes);
+        }
+
+        /// <summary>
+        /// Shows or hides all Objects
+        /// </summary>
+        private void OnShowHideObjects()
+        {
+            showingAllOBjects = !showingAllOBjects;
+            ARInteractionsManager.Instance.ShowHideAllObjects(showingAllOBjects);
+        }
+
+        /// <summary>
+        /// Adds or removes physics into the objects
+        /// </summary>
+        private void OnAddRemovePhysicsInObjects()
+        {
+            physicsActivated = !physicsActivated;
+            ARInteractionsManager.Instance.AddRemovePhysicsInObjects(physicsActivated);
+        }
+
+        /// <summary>
+        /// Deletes all objects in scene
+        /// </summary>
+        private void OnDeleteAllObjects()
+        {
+            ARInteractionsManager.Instance.DeleteAllObjects();
         }
 
         /// <summary>
@@ -118,7 +158,7 @@ namespace Managers
             closeButton.onClick.AddListener(() => ShowUserInstructionsPanel(false));
 
             // Set help button to open panel
-            helpButton.onClick.AddListener(() => ShowUserInstructionsPanel(true));
+            //helpButton.onClick.AddListener(() => ShowUserInstructionsPanel(true));
 
             ResetInstructionsPanel();
         }

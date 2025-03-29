@@ -112,6 +112,65 @@ namespace Managers
             objectsInScene.Add(ARObject);
         }
 
+        /// <summary>
+        /// Shows or hides each ARNote of each Object added into the scene.
+        /// </summary>
+        /// <param name="state"></param>
+        public void ShowHideARNotes(bool state)
+        {
+            foreach(GameObject aRObject in objectsInScene)
+            {
+                aRObject.GetComponent<ARObject>().ShowHideARNote(state);
+            }
+        }
+
+        /// <summary>
+        /// Shows or hides all objects added into the scene.
+        /// </summary>
+        /// <param name="state"></param>
+        public void ShowHideAllObjects(bool state)
+        {
+            foreach (GameObject aRObject in objectsInScene)
+            {
+                aRObject.SetActive(state);
+            }
+        }
+
+        /// <summary>
+        /// Adds or removes a RigidBody to each object
+        /// </summary>
+        /// <param name="state"></param>
+        public void AddRemovePhysicsInObjects(bool state)
+        {
+            foreach (GameObject aRObject in objectsInScene)
+            {
+                if (state)
+                {
+                    aRObject.AddComponent<Rigidbody>();
+                }
+                else
+                {
+                    if (aRObject.GetComponent<Rigidbody>() != null)
+                    {
+                        Destroy(aRObject.GetComponent<Rigidbody>());
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Destroy all objects in scene and clear its references
+        /// </summary>
+        public void DeleteAllObjects()
+        {
+            foreach( GameObject aRObject in objectsInScene)
+            {
+                Destroy(aRObject);
+            }
+
+            objectsInScene.Clear();
+        }
+
         #endregion
 
     }

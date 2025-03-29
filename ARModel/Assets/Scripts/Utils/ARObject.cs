@@ -25,6 +25,10 @@ namespace utils
         private ARTranslationInteractable aRTranslationInteractable;
         private ARAnnotationInteractable aRAnnotationInteractable;
 
+        // arNote of the object
+        [SerializeField]
+        private GameObject aRNote;
+
         #endregion
 
         #region private methods
@@ -68,6 +72,16 @@ namespace utils
             aRSelectionInteractable.enabled = state;
             aRTranslationInteractable.enabled = state;
             aRAnnotationInteractable.enabled = state;   
+        }
+
+        /// <summary>
+        /// Shows or hides the ARNote of this object
+        /// </summary>
+        /// <param name="state"></param>
+        public void ShowHideARNote(bool state)
+        {
+            aRAnnotationInteractable.enabled = state;
+            aRNote.SetActive(state);
         }
 
         #endregion

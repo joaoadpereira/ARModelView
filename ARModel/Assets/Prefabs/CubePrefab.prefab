@@ -121,7 +121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7177779554673794347
 Transform:
   m_ObjectHideFlags: 0
@@ -432,7 +432,6 @@ GameObject:
   - component: {fileID: 141506299709247694}
   - component: {fileID: 236490407710396383}
   - component: {fileID: 5856755995102021378}
-  - component: {fileID: 8932894608777056201}
   m_Layer: 0
   m_Name: CubePrefab
   m_TagString: ObjectToManipulate
@@ -903,6 +902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89aabb1ee655b7d4dac1a3ae12e9a89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aRNote: {fileID: 2978720336695211710}
 --- !u!114 &5856755995102021378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -910,7 +910,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8435208427637676620}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce49e6a0a544c46d1863a60030213a8f, type: 3}
   m_Name: 
@@ -1013,33 +1013,6 @@ MonoBehaviour:
     m_MaxFOVCenterOffsetAngle: 1
     m_MinAnnotationRange: 0
     m_MaxAnnotationRange: 10
---- !u!54 &8932894608777056201
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8435208427637676620}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 2
 --- !u!1 &8993523254017124186
 GameObject:
   m_ObjectHideFlags: 0
