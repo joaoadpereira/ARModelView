@@ -13,12 +13,15 @@ namespace Utils
     {
         #region fields
 
+        // hold reference to button components for manipulation
         private Image backgroundRenderer;
         private Button thisButton;
 
+        // hold and define unselected and selected colors
         private Color unselectedColor;
         private Color selectedColor = Color.green;
 
+        // control if button is currently selected
         private bool buttonIsSelected = false;
         
         #endregion
@@ -27,6 +30,7 @@ namespace Utils
 
         private void Awake()
         {
+            // define components
             thisButton = GetComponent<Button>();
             if (thisButton == null)
             {
@@ -40,6 +44,7 @@ namespace Utils
                 Debug.LogError("Canvas Renderer Background in Menu button is missing.");
             }
 
+            // define unselected color based on init color
             unselectedColor = backgroundRenderer.color;
         }
 
@@ -47,15 +52,18 @@ namespace Utils
 
         #region public methods
 
+        /// <summary>
+        /// Sets the button with logic based.
+        /// Handles icon color case selected or not.
+        /// </summary>
+        /// <param name="onSelect"></param>
         public void SetButton(Action onSelect)
         {
-            // set onSelect to listen to button click
+            // set onSelect to listen to button click and handles icon color selection
             thisButton.onClick.AddListener(() => {
                 onSelect.Invoke();
 
                 buttonIsSelected = !buttonIsSelected;
-
-                Debug.Log("Button is " + buttonIsSelected.ToString());
 
                 Color backgroundColor = buttonIsSelected ? selectedColor : unselectedColor;
                 backgroundRenderer.color = backgroundColor;
