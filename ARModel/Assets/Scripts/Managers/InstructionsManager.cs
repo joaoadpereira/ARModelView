@@ -43,10 +43,6 @@ namespace Managers
         [SerializeField]
         private Button closeInstructionsButton;
 
-        //[Header("Help button")]
-        //[SerializeField]
-        //private Button helpButton;
-
         [Header("Menu buttons")]
         [SerializeField]
         private ButtonMenu seeHideARNotesButton;
