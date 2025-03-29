@@ -3408,8 +3408,7 @@ MonoBehaviour:
   instructionText: {fileID: 5208610952673785359}
   previousInstructionButton: {fileID: 1523215082}
   forwardInstructionButton: {fileID: 573405285}
-  closeButton: {fileID: 709586914}
-  helpButton: {fileID: 1831319944}
+  closeInstructionsButton: {fileID: 709586914}
   seeHideARNotesButton: {fileID: 1128255802}
   seeHideObjectsButton: {fileID: 768095267}
   otherObjectsMenuButton: {fileID: 41986331}
