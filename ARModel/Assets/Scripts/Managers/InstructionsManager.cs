@@ -25,6 +25,7 @@ namespace Managers
         private bool showingARNotesMenu = false;
         private bool showingAllOBjectsMenu = false;
         private bool physicsActivatedMenu = false;
+        private bool showingInstructionsMenu = false;
 
         [Header("Initial App Panel to show")]
         [SerializeField]
@@ -40,11 +41,11 @@ namespace Managers
         [SerializeField]
         private Button forwardInstructionButton;
         [SerializeField]
-        private Button closeButton;
+        private Button closeInstructionsButton;
 
-        [Header("Help button")]
-        [SerializeField]
-        private Button helpButton;
+        //[Header("Help button")]
+        //[SerializeField]
+        //private Button helpButton;
 
         [Header("Menu buttons")]
         [SerializeField]
@@ -125,7 +126,7 @@ namespace Managers
             seeHideObjectsButton.SetButton(() => OnShowHideObjects());
             enablePhysicsButton.SetButton(() => OnAddRemovePhysicsInObjects());
             deleteAllButton.SetButton(() => OnDeleteAllObjects(), false);
-            seeInstructionsButton.SetButton(() => ShowUserInstructionsPanel(true));
+            seeInstructionsButton.SetButton(() => ShowUserInstructionsPanel());
         }
 
         /// <summary>
@@ -171,10 +172,9 @@ namespace Managers
             // Add listners to each instructions button control
             forwardInstructionButton.onClick.AddListener(SetForwardInstruction);
             previousInstructionButton.onClick.AddListener(SetPreviousInstruction);
-            closeButton.onClick.AddListener(() => ShowUserInstructionsPanel(false));
 
-            // Set help button to open panel
-            //helpButton.onClick.AddListener(() => ShowUserInstructionsPanel(true));
+            // add instructions button click action as listner the close instructions click
+            closeInstructionsButton.onClick.AddListener(() => seeInstructionsButton.ClickButton(() => ShowUserInstructionsPanel()));
 
             ResetInstructionsPanel();
         }
@@ -194,8 +194,9 @@ namespace Managers
                     // When click the button, show panel instructions and hide the initialAppPanel
                     initalButton.onClick.AddListener(() => 
                     {
-                        ShowUserInstructionsPanel(true);
-                        
+                        //ShowUserInstructionsPanel(true);
+                        seeInstructionsButton.ClickButton(() => ShowUserInstructionsPanel());
+
                         // hide the initialAppPanel
                         initialAppPanel.SetActive(false);
                     });
@@ -215,26 +216,22 @@ namespace Managers
         /// Sets the user instructions panel
         /// </summary>
         /// <param name="state"></param>
-        private void ShowUserInstructionsPanel(bool state)
+        private void ShowUserInstructionsPanel()
         {
+            showingInstructionsMenu = !showingInstructionsMenu;
+
             // show the instructions Panel
-            instructionsPanel.SetActive(state);
+            instructionsPanel.SetActive(showingInstructionsMenu);
 
             ResetInstructionsPanel();
 
-            if (!state)
+            if (!showingInstructionsMenu)
             {
-                // show help button if instructions close
-                helpButton.gameObject.SetActive(true);
-
                 // change state to idle 
                 AppManager.Instance.SetAppState(AppState.Idle);
             }
             else
             {
-                // hide help button if instructions panel is active
-                helpButton.gameObject.SetActive(false);
-
                 // change state to showing instructions
                 AppManager.Instance.SetAppState(AppState.ShowingInstructions);
             }

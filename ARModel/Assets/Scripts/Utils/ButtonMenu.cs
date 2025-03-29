@@ -48,6 +48,21 @@ namespace Utils
             unselectedColor = backgroundRenderer.color;
         }
 
+        /// <summary>
+        /// Handles button activation with background color control
+        /// </summary>
+        /// <param name="keepButtonSelected"></param>
+        private void ButtonClicked(bool keepButtonSelected = true)
+        {
+            if (keepButtonSelected)
+            {
+                buttonIsSelected = !buttonIsSelected;
+
+                Color backgroundColor = buttonIsSelected ? selectedColor : unselectedColor;
+                backgroundRenderer.color = backgroundColor;
+            }
+        }
+
         #endregion
 
         #region public methods
@@ -63,14 +78,17 @@ namespace Utils
             thisButton.onClick.AddListener(() => {
                 onSelect.Invoke();
 
-                if (keepButtonSelected)
-                {
-                    buttonIsSelected = !buttonIsSelected;
-
-                    Color backgroundColor = buttonIsSelected ? selectedColor : unselectedColor;
-                    backgroundRenderer.color = backgroundColor;
-                }
+                ButtonClicked(keepButtonSelected);
             });
+        }
+
+        /// <summary>
+        /// Case is necessary to activate button internally
+        /// </summary>
+        public void ClickButton(Action onSelect, bool keepButtonSelected = true)
+        {
+            onSelect.Invoke();
+            ButtonClicked(keepButtonSelected);
         }
 
         #endregion
