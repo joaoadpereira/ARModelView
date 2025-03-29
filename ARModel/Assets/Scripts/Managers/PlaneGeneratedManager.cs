@@ -15,8 +15,11 @@ namespace Managers
         #region fields
         private static PlaneGeneratedManager instance;
 
+        [Header("AR Managers")]
         [SerializeField]
         private ARPlaneManager aRPlaneManager;
+        [SerializeField]
+        private AROcclusionManager aROcclusionManager;
 
         [Header("Materials to distinguish between different plane classification")]
         [SerializeField]
@@ -30,6 +33,9 @@ namespace Managers
 
         // track if device can classify planes
         private bool deviceSupportsClassification = false;
+
+        // track if device supports occlusion
+        private bool deviceSupportsOcclusion = false;
 
         // track of floor hight
         private float floorHight = float.MaxValue;
@@ -70,23 +76,33 @@ namespace Managers
         // Start is called before the first frame update
         private void Start()
         {
+            // only compile and make verification when running on android/ios device
+#if !UNITY_EDITOR && PLATFORM_ANDROID || PLATFORM_IOS
+
             if (aRPlaneManager != null)
             {
                 // listen to ARPlanes have been added, updated or removed
                 aRPlaneManager.planesChanged += PlanesChanged;
 
-#if !UNITY_EDITOR && PLATFORM_ANDROID || PLATFORM_IOS
-
                 // Define if device can classify ARPlanes automatically
                 deviceSupportsClassification = aRPlaneManager.descriptor.supportsClassification;
-
-#endif    
-            }
+            } 
             else
             {
                 Debug.LogError("ARPlaneManager is not assigned.");
             }
-
+            
+            if (aROcclusionManager != null)
+            {
+                // Define id device supports occlusion
+                deviceSupportsOcclusion = aROcclusionManager.descriptor.environmentDepthImageSupported == Supported.Supported;
+                Debug.Log("deviceSupportsOcclusion: " + deviceSupportsOcclusion.ToString());
+            }
+            else
+            {
+                Debug.LogError("AROclusionManager is not assigned.");
+            }
+#endif
         }
 
 

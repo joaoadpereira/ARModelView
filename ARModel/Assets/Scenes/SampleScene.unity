@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: 301562483}
   - component: {fileID: 301562482}
   - component: {fileID: 301562487}
+  - component: {fileID: 301562488}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -554,6 +555,23 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
   m_ARSessionOrigin: {fileID: 0}
+--- !u!114 &301562488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301562480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15f82cc229284894964d2d30806969d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HumanSegmentationStencilMode: 3
+  m_HumanSegmentationDepthMode: 2
+  m_EnvironmentDepthMode: 3
+  m_EnvironmentDepthTemporalSmoothing: 1
+  m_OcclusionPreferenceMode: 0
 --- !u!1 &348945058
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,6 +968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aRPlaneManager: {fileID: 1938728114}
+  aROcclusionManager: {fileID: 301562488}
   wallMaterial: {fileID: 2100000, guid: a7f1c3bb4e920bf44bc511da431d5723, type: 2}
   tableMaterial: {fileID: 2100000, guid: 47a843ac71d77484f8e268f1890f8482, type: 2}
   floorMaterial: {fileID: 2100000, guid: fd52fd4dd1a2b454aba6f9c57be9f546, type: 2}
