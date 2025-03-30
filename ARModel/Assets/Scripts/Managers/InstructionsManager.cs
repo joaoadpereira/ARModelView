@@ -57,6 +57,10 @@ namespace Managers
         [SerializeField]
         private ButtonMenu seeInstructionsButton;
 
+        [Header("Selected Prefab to add")]
+        [SerializeField]
+        private GameObject PrefabToInstantiate;
+
         #endregion
 
         #region properties

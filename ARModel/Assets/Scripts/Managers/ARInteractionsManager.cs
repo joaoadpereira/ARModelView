@@ -27,6 +27,8 @@ namespace Managers
 
         // keep track of all objects added into the scene
         List<GameObject> objectsInScene = new List<GameObject>();
+
+        private int numberOfObjectsInScene = 0;
         
         [Header("AR Placement Interactablein scene")]
         [SerializeField]
@@ -49,6 +51,14 @@ namespace Managers
         {
             get { return instance; }
         }
+
+        /// <summary>
+        /// Returns the number of objects in scene
+        /// </summary>
+        public int NumberOfObjectsInScene
+        {
+            get { return numberOfObjectsInScene; }  
+        } 
 
         #endregion
 
@@ -110,6 +120,8 @@ namespace Managers
         {
             // add object to objects in scene
             objectsInScene.Add(ARObject);
+
+            numberOfObjectsInScene++;
         }
 
         /// <summary>
@@ -168,7 +180,9 @@ namespace Managers
                 Destroy(aRObject);
             }
 
+            // reset counting
             objectsInScene.Clear();
+            numberOfObjectsInScene = 0;
         }
 
         #endregion

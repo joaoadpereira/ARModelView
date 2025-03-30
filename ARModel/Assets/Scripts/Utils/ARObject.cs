@@ -1,8 +1,11 @@
 using Managers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit.AR;
 
 namespace utils
@@ -26,9 +29,17 @@ namespace utils
         private ARTranslationInteractable aRTranslationInteractable;
         private ARAnnotationInteractable aRAnnotationInteractable;
 
+        private string objectName;
+        private DateTime instantiateTime;
+
+        [Header("ARNtes components")]
         // arNote of the object
         [SerializeField]
         private GameObject aRNote;
+        [SerializeField]
+        private TMP_Text textTitle;
+        [SerializeField]
+        private TMP_Text textContent;
 
         #endregion
 
@@ -66,6 +77,15 @@ namespace utils
             {
                 transform.AddComponent<Rigidbody>();
             }
+
+            // set name and time that was created
+            string originalPrefabName = gameObject.name.Replace("(Clone)", "").Trim();
+            objectName = originalPrefabName + " " + ARInteractionsManager.Instance.NumberOfObjectsInScene.ToString();
+            instantiateTime = DateTime.Now;
+
+            //Set into title and textContent in ARNote
+            textTitle.text = objectName;
+            textContent.text = "The " + objectName + " object was added to the world at " + instantiateTime.ToString("HH:mm:ss") + ".";
 
             // set active or not if Menu showing objects is activated
             this.gameObject.SetActive(InstructionsManager.Instance.ShowingAllObjectsMenu);
