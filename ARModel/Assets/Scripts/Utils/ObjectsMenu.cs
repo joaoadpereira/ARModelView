@@ -40,8 +40,6 @@ namespace Utils
         /// <param name="menuIndex"></param>
         private void HandleButtonClick(int menuIndex)
         {
-            Debug.Log("index selected: " + menuIndex.ToString());
-
             Object objectSelectedMenu;
             switch (menuIndex)
             {
@@ -52,7 +50,7 @@ namespace Utils
                     objectSelectedMenu = Object.Engine;
                     break;
                 case 2:
-                    objectSelectedMenu = Object.BrainStem;
+                    objectSelectedMenu = Object.WaterBottle;
                     break;
                 default:
                     objectSelectedMenu = Object.None;
@@ -60,6 +58,7 @@ namespace Utils
 
             }
         
+            // communicate the obejct selected
             ObjectSelected.Invoke(objectSelectedMenu);
         }
 

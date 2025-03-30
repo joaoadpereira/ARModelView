@@ -168,14 +168,12 @@ namespace Managers
                 case Object.Engine:
                     currentObjectToInstantiate = objectsToInstantiate[1];
                     break;
-                case Object.BrainStem:
+                case Object.WaterBottle:
                     currentObjectToInstantiate = objectsToInstantiate[2];
                     break;
                 case Object.None:
                     break;
             }
-
-            Debug.Log("object to instantiate: " + currentObjectToInstantiate.name);
 
             // hide object menu by "clicking" in objectMenu button
             otherObjectsMenuButton.ClickButton(() => OnShowOtherObjectsMenu());

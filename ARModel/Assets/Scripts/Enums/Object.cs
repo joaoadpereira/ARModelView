@@ -10,5 +10,5 @@ public enum Object
     None,
     Avocado,
     Engine,
-    BrainStem,
+    WaterBottle,
 }
