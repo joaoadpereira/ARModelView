@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a072429eae54c0f4f80119c1635df359
+guid: 097b5277f4a688f4ea4a0ed3c80f1a3c
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -41,11 +41,11 @@ ScriptedImporter:
 '
   optimizeGameObjects: 0
   materials:
-  - {instanceID: 0}
+  - {fileID: 4703513809368609961, guid: 097b5277f4a688f4ea4a0ed3c80f1a3c, type: 3}
   textures:
-  - {instanceID: 0}
-  - {instanceID: 0}
-  - {instanceID: 0}
+  - {fileID: 6983701643236107813, guid: 097b5277f4a688f4ea4a0ed3c80f1a3c, type: 3}
+  - {fileID: 8022499087761476943, guid: 097b5277f4a688f4ea4a0ed3c80f1a3c, type: 3}
+  - {fileID: 5230624929818990856, guid: 097b5277f4a688f4ea4a0ed3c80f1a3c, type: 3}
   hasSceneData: 1
   hasAnimationData: 0
   hasMaterialData: 1
@@ -53,13 +53,13 @@ ScriptedImporter:
   animations: []
   _extensions: []
   _textures:
-  - texture: {instanceID: 0}
+  - texture: {fileID: 6983701643236107813, guid: 097b5277f4a688f4ea4a0ed3c80f1a3c, type: 3}
     shouldBeLinear: 0
     shouldBeNormalMap: 0
-  - texture: {instanceID: 0}
+  - texture: {fileID: 8022499087761476943, guid: 097b5277f4a688f4ea4a0ed3c80f1a3c, type: 3}
     shouldBeLinear: 1
     shouldBeNormalMap: 0
-  - texture: {instanceID: 0}
+  - texture: {fileID: 5230624929818990856, guid: 097b5277f4a688f4ea4a0ed3c80f1a3c, type: 3}
     shouldBeLinear: 1
     shouldBeNormalMap: 1
   _mainAssetIdentifier: scenes/Scene
