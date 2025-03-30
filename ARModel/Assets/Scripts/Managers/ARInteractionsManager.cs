@@ -27,7 +27,6 @@ namespace Managers
 
         // keep track of all objects added into the scene
         List<GameObject> objectsInScene = new List<GameObject>();
-
         private int numberOfObjectsInScene = 0;
         
         [Header("AR Placement Interactablein scene")]

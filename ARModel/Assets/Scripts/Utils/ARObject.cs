@@ -88,7 +88,7 @@ namespace utils
             textContent.text = "The " + objectName + " object was added to the world at " + instantiateTime.ToString("HH:mm:ss") + ".";
 
             // set active or not if Menu showing objects is activated
-            this.gameObject.SetActive(InstructionsManager.Instance.ShowingAllObjectsMenu);
+            this.gameObject.SetActive(InstructionsManager.Instance.ShowingARPlanesMenu);
         }
 
         #endregion

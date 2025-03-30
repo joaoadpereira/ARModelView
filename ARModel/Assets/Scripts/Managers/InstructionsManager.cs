@@ -23,7 +23,7 @@ namespace Managers
 
         // control for menu buttons
         private bool showingARNotesMenu = false;
-        private bool showingAllObjectsMenu = false;
+        private bool showingARPlanesMenu = false;
         private bool physicsActivatedMenu = false;
         private bool showingInstructionsMenu = false;
         private bool showingObjectsMenu = false;
@@ -48,7 +48,7 @@ namespace Managers
         [SerializeField]
         private ButtonMenu seeHideARNotesButton;
         [SerializeField]
-        private ButtonMenu seeHideObjectsButton;
+        private ButtonMenu seeHideARPlanesButton;
         [SerializeField]
         private ButtonMenu otherObjectsMenuButton;
         [SerializeField]
@@ -90,11 +90,11 @@ namespace Managers
         }
 
         /// <summary>
-        /// Returns if showingAllOBjectsMenu is activated
+        /// Returns if ShowingARPlanesMenu is activated
         /// </summary>
-        public bool ShowingAllObjectsMenu
+        public bool ShowingARPlanesMenu
         {
-            get { return showingAllObjectsMenu; }
+            get { return showingARPlanesMenu; }
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Managers
 
             // sets logic when menu buttons are clicked
             seeHideARNotesButton.SetButton(() => OnShowHideArNotesButton());
-            seeHideObjectsButton.SetButton(() => OnShowHideObjects());
+            seeHideARPlanesButton.SetButton(() => OnShowHideARPlanes());
             otherObjectsMenuButton.SetButton(() => OnShowOtherObjectsMenu());
             enablePhysicsButton.SetButton(() => OnAddRemovePhysicsInObjects());
             deleteAllButton.SetButton(() => OnDeleteAllObjects(), false);
@@ -151,7 +151,7 @@ namespace Managers
 
             // start app with menu options activated
             seeHideARNotesButton.ClickButton(() => OnShowHideArNotesButton());
-            seeHideObjectsButton.ClickButton(() => OnShowHideObjects());
+            seeHideARPlanesButton.ClickButton(() => OnShowHideARPlanes());
 
             // listen to object menu selected
             menuObjects.GetComponent<ObjectsMenu>().ObjectSelected += OnObjectMenuSelected;
@@ -195,10 +195,10 @@ namespace Managers
         /// <summary>
         /// Shows or hides all Objects
         /// </summary>
-        private void OnShowHideObjects()
+        private void OnShowHideARPlanes()
         {
-            showingAllObjectsMenu = !showingAllObjectsMenu;
-            ARInteractionsManager.Instance.ShowHideAllObjects(showingAllObjectsMenu);
+            showingARPlanesMenu = !showingARPlanesMenu;
+            PlaneGeneratedManager.Instance.ShowHideARPlanes(showingARPlanesMenu);
 
         }
 

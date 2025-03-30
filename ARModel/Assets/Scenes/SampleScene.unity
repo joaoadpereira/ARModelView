@@ -1826,7 +1826,7 @@ GameObject:
   - component: {fileID: 768095264}
   - component: {fileID: 768095267}
   m_Layer: 5
-  m_Name: SeeHideObjectsButton
+  m_Name: SeeHideARPlanesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4334,7 +4334,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'See Objects
+  m_text: 'See planes
 
 '
   m_isRightToLeft: 0
@@ -4524,7 +4524,7 @@ MonoBehaviour:
   forwardInstructionButton: {fileID: 573405285}
   closeInstructionsButton: {fileID: 709586914}
   seeHideARNotesButton: {fileID: 1128255802}
-  seeHideObjectsButton: {fileID: 768095267}
+  seeHideARPlanesButton: {fileID: 768095267}
   otherObjectsMenuButton: {fileID: 41986331}
   enablePhysicsButton: {fileID: 1314244428}
   deleteAllButton: {fileID: 1533332822}

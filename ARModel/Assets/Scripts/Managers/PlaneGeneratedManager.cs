@@ -16,6 +16,19 @@ namespace Managers
         #region fields
         private static PlaneGeneratedManager instance;
 
+        // track if device can classify planes
+        private bool deviceSupportsClassification = false;
+
+        // track if device supports occlusion
+        private bool deviceSupportsOcclusion = false;
+
+        // track of floor hight
+        private float floorHight = float.MaxValue;
+        private float thresholdHight = 0.2f;
+
+        // track all planes 
+        private List<ARPlane> allARPlanes = new List<ARPlane>();
+
         [Header("AR Managers")]
         [SerializeField]
         private ARPlaneManager aRPlaneManager;
@@ -31,19 +44,6 @@ namespace Managers
         private Material floorMaterial;
         [SerializeField]
         private Material defaultSurfaceMaterial;
-
-        // track if device can classify planes
-        private bool deviceSupportsClassification = false;
-
-        // track if device supports occlusion
-        private bool deviceSupportsOcclusion = false;
-
-        // track of floor hight
-        private float floorHight = float.MaxValue;
-        private float thresholdHight = 0.2f;
-
-        // track all planes 
-        private List<ARPlane> allARPlanes = new List<ARPlane>();
 
         #endregion
 
@@ -111,6 +111,9 @@ namespace Managers
         /// <param name="arfs"></param>
         private void PlanesChanged(ARPlanesChangedEventArgs args)
         {
+            // get menu see/hide planes state
+            bool showARPlanes = InstructionsManager.Instance.ShowingARPlanesMenu;
+
             // handle added new AR planes
             allARPlanes = new List<ARPlane> ();
 
@@ -150,7 +153,9 @@ namespace Managers
                         UpdateARPlaneMaterial(plane, defaultSurfaceMaterial);
                         break;
                 }
-                
+
+                // set active state based on menu see/hide planes
+                plane.gameObject.SetActive(showARPlanes);
             }
         }
 
@@ -212,6 +217,22 @@ namespace Managers
             else
             {
                 Debug.LogError("The ARPlane does not have a Renderer Component");
+            }
+        }
+
+        #endregion
+
+        #region public methods
+
+        /// <summary>
+        /// Shows or hides all ARPlanes in scene
+        /// </summary>
+        /// <param name="state"></param>
+        public void ShowHideARPlanes(bool state)
+        {
+            foreach(ARPlane aRPlane in allARPlanes)
+            {
+                aRPlane.gameObject.SetActive(state);
             }
         }
 
