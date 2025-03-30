@@ -26,6 +26,7 @@ namespace Managers
         private bool showingAllObjectsMenu = false;
         private bool physicsActivatedMenu = false;
         private bool showingInstructionsMenu = false;
+        private bool showingObjectsMenu = false;
 
         [Header("Initial App Panel to show")]
         [SerializeField]
@@ -59,7 +60,11 @@ namespace Managers
 
         [Header("Selected Prefab to add")]
         [SerializeField]
-        private GameObject PrefabToInstantiate;
+        private GameObject menuObjects;
+        [SerializeField]
+        private GameObject[] objectsToInstantiate;
+
+        private GameObject currentObjectToInstantiate;
 
         #endregion
 
@@ -126,12 +131,20 @@ namespace Managers
 
         private void Start()
         {
+            //define object to instantiate and communicate
+            currentObjectToInstantiate = objectsToInstantiate[0];
+            ARInteractionsManager.Instance.SetObjectToInstantiate(currentObjectToInstantiate);
+
+            // hide initially the menu object
+            menuObjects.SetActive(false);
+
             // add listners to instructions panel
             SetInitialPanel();
 
             // sets logic when menu buttons are clicked
             seeHideARNotesButton.SetButton(() => OnShowHideArNotesButton());
             seeHideObjectsButton.SetButton(() => OnShowHideObjects());
+            otherObjectsMenuButton.SetButton(() => OnShowOtherObjectsMenu());
             enablePhysicsButton.SetButton(() => OnAddRemovePhysicsInObjects());
             deleteAllButton.SetButton(() => OnDeleteAllObjects(), false);
             seeInstructionsButton.SetButton(() => ShowUserInstructionsPanel());
@@ -139,6 +152,37 @@ namespace Managers
             // start app with menu options activated
             seeHideARNotesButton.ClickButton(() => OnShowHideArNotesButton());
             seeHideObjectsButton.ClickButton(() => OnShowHideObjects());
+
+            // listen to object menu selected
+            menuObjects.GetComponent<ObjectsMenu>().ObjectSelected += OnObjectMenuSelected;
+        }
+
+        private void OnObjectMenuSelected(Object objectSelected)
+        {
+            // receive object selected 
+            switch (objectSelected)
+            {
+                case Object.Avocado:
+                    currentObjectToInstantiate = objectsToInstantiate[0];
+                    break;
+                case Object.Engine:
+                    currentObjectToInstantiate = objectsToInstantiate[1];
+                    break;
+                case Object.BrainStem:
+                    currentObjectToInstantiate = objectsToInstantiate[2];
+                    break;
+                case Object.None:
+                    break;
+            }
+
+            Debug.Log("object to instantiate: " + currentObjectToInstantiate.name);
+
+            // hide object menu by "clicking" in objectMenu button
+            otherObjectsMenuButton.ClickButton(() => OnShowOtherObjectsMenu());
+
+            // communicate the object to instantiate
+            ARInteractionsManager.Instance.SetObjectToInstantiate(currentObjectToInstantiate);
+
         }
 
         /// <summary>
@@ -157,6 +201,16 @@ namespace Managers
         {
             showingAllObjectsMenu = !showingAllObjectsMenu;
             ARInteractionsManager.Instance.ShowHideAllObjects(showingAllObjectsMenu);
+
+        }
+
+        private void OnShowOtherObjectsMenu()
+        {
+            showingObjectsMenu = !showingObjectsMenu;
+
+            // show or hide object menu
+            menuObjects.SetActive(showingObjectsMenu);
+
         }
 
         /// <summary>

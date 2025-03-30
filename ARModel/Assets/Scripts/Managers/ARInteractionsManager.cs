@@ -185,6 +185,15 @@ namespace Managers
             numberOfObjectsInScene = 0;
         }
 
+        public void SetObjectToInstantiate(GameObject otherObject)
+        {
+            objectToAR = otherObject;
+            
+            // add Object to instantiate into ARPlacementinteractable
+            aRPlacementInteractable.placementPrefab = objectToAR;
+
+        }
+
         #endregion
 
     }

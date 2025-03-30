@@ -2874,6 +2874,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1134137248}
   - component: {fileID: 1134137249}
+  - component: {fileID: 1134137250}
   m_Layer: 5
   m_Name: ObjectMenu
   m_TagString: Untagged
@@ -2929,6 +2930,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1134137250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134137247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17a742a328ee14393cf559b636e0df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectButtons:
+  - {fileID: 276390325}
+  - {fileID: 906799088}
+  - {fileID: 1253993155}
 --- !u!1 &1158111188
 GameObject:
   m_ObjectHideFlags: 0
@@ -3259,7 +3276,7 @@ GameObject:
   - component: {fileID: 1253993155}
   - component: {fileID: 1253993154}
   m_Layer: 5
-  m_Name: EnableDisablePhysicsButton
+  m_Name: BrainStemButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4514,7 +4531,11 @@ MonoBehaviour:
   enablePhysicsButton: {fileID: 1314244428}
   deleteAllButton: {fileID: 1533332822}
   seeInstructionsButton: {fileID: 1229732093}
-  PrefabToInstantiate: {fileID: 0}
+  menuObjects: {fileID: 1134137247}
+  objectsToInstantiate:
+  - {fileID: 8435208427637676620, guid: 33268ed6d15c2dc4c9872f9f4446f9df, type: 3}
+  - {fileID: 8435208427637676620, guid: 36c30251ab39ec0479afc5a2dbc6ff81, type: 3}
+  - {fileID: 8435208427637676620, guid: 35f632a93ba3f0c44974789c14268bab, type: 3}
 --- !u!4 &1754668571
 Transform:
   m_ObjectHideFlags: 0
