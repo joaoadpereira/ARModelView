@@ -624,6 +624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 275855997}
   - component: {fileID: 275855996}
+  - component: {fileID: 275855998}
   m_Layer: 0
   m_Name: Voice Commands Manager
   m_TagString: Untagged
@@ -643,6 +644,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c0830208d1b4444a9979f0578ef2b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whisper: {fileID: 1070742280}
+  microphoneRecord: {fileID: 275855998}
+  button: {fileID: 795290137}
+  buttonText: {fileID: 1493228302}
+  text: {fileID: 2081359297}
 --- !u!4 &275855997
 Transform:
   m_ObjectHideFlags: 0
@@ -658,6 +664,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &275855998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275855995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc03a4c19604ea394e364f8fc632928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLengthSec: 60
+  loop: 0
+  frequency: 16000
+  chunksLengthSec: 0.5
+  echo: 1
+  useVad: 1
+  vadUpdateRateSec: 0.1
+  vadContextSec: 30
+  vadLastSec: 1.25
+  vadThd: 1
+  vadFreqThd: 100
+  vadIndicatorImage: {fileID: 0}
+  vadStop: 0
+  dropVadPart: 1
+  vadStopTime: 3
+  microphoneDropdown: {fileID: 0}
+  microphoneDefaultLabel: Default microphone
 --- !u!1 &276390322
 GameObject:
   m_ObjectHideFlags: 0
@@ -3836,86 +3871,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1357422969
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1357422972}
-  - component: {fileID: 1357422971}
-  - component: {fileID: 1357422970}
-  m_Layer: 0
-  m_Name: DemoMic
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1357422970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357422969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bc03a4c19604ea394e364f8fc632928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxLengthSec: 60
-  loop: 0
-  frequency: 16000
-  chunksLengthSec: 0.5
-  echo: 1
-  useVad: 1
-  vadUpdateRateSec: 0.1
-  vadContextSec: 30
-  vadLastSec: 1.25
-  vadThd: 1
-  vadFreqThd: 100
-  vadIndicatorImage: {fileID: 0}
-  vadStop: 0
-  dropVadPart: 1
-  vadStopTime: 3
-  microphoneDropdown: {fileID: 0}
-  microphoneDefaultLabel: Default microphone
---- !u!114 &1357422971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357422969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3e9d525d0d8ae4f8047fa9fc31fd03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  whisper: {fileID: 1070742280}
-  microphoneRecord: {fileID: 1357422970}
-  button: {fileID: 795290137}
-  buttonText: {fileID: 2081359297}
-  text: {fileID: 2081359297}
-  scroll: {fileID: 0}
---- !u!4 &1357422972
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357422969}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.561584, y: 1370.285, z: -138.72305}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1388949611
 GameObject:
   m_ObjectHideFlags: 0
@@ -6623,6 +6578,7 @@ SceneRoots:
   - {fileID: 782628377}
   - {fileID: 223974228}
   - {fileID: 1487891193}
+  - {fileID: 1070742281}
   - {fileID: 1388949612}
   - {fileID: 777802154}
   - {fileID: 1754668571}
@@ -6633,5 +6589,3 @@ SceneRoots:
   - {fileID: 1633336907}
   - {fileID: 2868436644010094479}
   - {fileID: 1775353401}
-  - {fileID: 1070742281}
-  - {fileID: 1357422972}
