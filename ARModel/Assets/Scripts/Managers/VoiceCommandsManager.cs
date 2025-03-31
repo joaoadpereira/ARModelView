@@ -22,6 +22,9 @@ namespace Managers
 
         private string recordText = "Click to speak commands";
         private string stopRecordingText = "Stop recording";
+        private string listeningText = "Listening...";
+        private string processingText = "Processing...";
+        private string commandSpeechText = "COMMAND: ";
 
         private ButtonMenu buttonMenu;
 
@@ -111,11 +114,17 @@ namespace Managers
 
             if (!microphoneRecord.IsRecording)
             {
+                Debug.Log("Recording");
+
                 stream.StartStream();
                 microphoneRecord.StartRecord();
             }
             else
+            {
+                Debug.Log("Processing");
                 microphoneRecord.StopRecord();
+            }
+                
 
             buttonText.text = microphoneRecord.IsRecording ? stopRecordingText : recordText;
         }
@@ -127,13 +136,17 @@ namespace Managers
 
         private void OnResult(string result)
         {
-            text.text = result;
+            text.text = commandSpeechText + " " + result;
+            string resultClean = result.Replace("!","").Replace("?","").Replace(".","").ToLower(); 
 
             //handle result
-            if (result.ToLower().Contains("forward"))
+            if (resultClean.Contains("rotate"))
             {
-                Debug.Log("Moving object forward...");
-                ARInteractionsManager.Instance.MoveObjectForward();
+                Debug.Log("rotating the object...");
+                ARInteractionsManager.Instance.InteractWithObject();
+            } else if (resultClean.Contains("scale"))
+            {
+                ARInteractionsManager.Instance.ScaleUp();
             }
 
         }

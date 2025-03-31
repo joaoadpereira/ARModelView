@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.AR;
 
 namespace utils
@@ -32,6 +33,8 @@ namespace utils
         private string objectName;
         private DateTime instantiateTime;
 
+        private bool objectIsSelected = false;
+
         [Header("ARNtes components")]
         // arNote of the object
         [SerializeField]
@@ -57,15 +60,6 @@ namespace utils
         // Start is called before the first frame update
         private void Start()
         {
-            // communicates that this object was added into the scene
-            ObjectWasInstantiated();
-        }
-
-        /// <summary>
-        /// Commmunicates with ARInteractionsManager that this object was added into the scene
-        /// </summary>
-        private void ObjectWasInstantiated()
-        {
             // inform this object was created
             ARInteractionsManager.Instance.ObjectAdded(this.gameObject);
 
@@ -89,6 +83,16 @@ namespace utils
 
             // set active or not if Menu showing objects is activated
             this.gameObject.SetActive(InstructionsManager.Instance.ShowingARPlanesMenu);
+
+            // listen to when the object is selected
+            aRSelectionInteractable.selectEntered.AddListener(OnObjectSelected);
+        }
+
+        private void OnObjectSelected(SelectEnterEventArgs args)
+        {
+            objectIsSelected = !objectIsSelected;
+
+            ARInteractionsManager.Instance.ObjectWasSelected(this.gameObject);
         }
 
         #endregion
