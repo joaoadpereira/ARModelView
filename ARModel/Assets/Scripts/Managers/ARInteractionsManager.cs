@@ -202,6 +202,14 @@ namespace Managers
             }
         }
 
+        public void Forward()
+        {
+            if (objectSelected != null)
+            {
+                objectSelected.transform.Translate(Vector3.forward);
+            }
+        }
+
         public void ScaleUp()
         {
 

@@ -147,6 +147,9 @@ namespace Managers
             } else if (resultClean.Contains("scale"))
             {
                 ARInteractionsManager.Instance.ScaleUp();
+            } else if (resultClean.Contains("forward"))
+            {
+                ARInteractionsManager.Instance.Forward();
             }
 
         }
