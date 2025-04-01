@@ -184,14 +184,11 @@ namespace Managers
             // receive object selected 
             switch (objectSelected)
             {
-                case Object.Avocado:
+                case Object.Drill:
                     currentObjectToInstantiate = objectsToInstantiate[0];
                     break;
-                case Object.Engine:
+                case Object.Toolbox:
                     currentObjectToInstantiate = objectsToInstantiate[1];
-                    break;
-                case Object.WaterBottle:
-                    currentObjectToInstantiate = objectsToInstantiate[2];
                     break;
                 case Object.None:
                     break;

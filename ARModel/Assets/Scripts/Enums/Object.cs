@@ -8,7 +8,6 @@ using UnityEngine;
 public enum Object 
 {
     None,
-    Avocado,
-    Engine,
-    WaterBottle,
+    Drill,
+    Toolbox,
 }

@@ -44,13 +44,10 @@ namespace Utils
             switch (menuIndex)
             {
                 case 0:
-                    objectSelectedMenu = Object.Avocado;
+                    objectSelectedMenu = Object.Drill;
                     break;
                 case 1:
-                    objectSelectedMenu = Object.Engine;
-                    break;
-                case 2:
-                    objectSelectedMenu = Object.WaterBottle;
+                    objectSelectedMenu = Object.Toolbox;
                     break;
                 default:
                     objectSelectedMenu = Object.None;

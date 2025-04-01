@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 236490407710396383}
   - component: {fileID: 5856755995102021378}
   m_Layer: 0
-  m_Name: Boch Toolbox
+  m_Name: Bosch Toolbox
   m_TagString: ObjectToManipulate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
