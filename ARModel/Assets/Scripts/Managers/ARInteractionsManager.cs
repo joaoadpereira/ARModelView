@@ -29,7 +29,11 @@ namespace Managers
         // keep track of all objects added into the scene
         List<GameObject> objectsInScene = new List<GameObject>();
         private int numberOfObjectsInScene = 0;
-        
+
+        [Header("Interaction Manager")]
+        [SerializeField]
+        private XRInteractionManager interactionManager;
+
         [Header("AR Placement Interactablein scene")]
         [SerializeField]
         private ARPlacementInteractable aRPlacementInteractable;
@@ -246,6 +250,26 @@ namespace Managers
             objectSelected = null;
 
             //communicate obejct selected stae
+            AppManager.Instance.SetAppState(AppState.Idle);
+        }
+
+        /// <summary>
+        /// deletes the object selected
+        /// </summary>
+        public void DeleteObject()
+        {        
+            if (objectSelected != null)
+            {
+                IXRSelectInteractable interactor = objectSelected.GetComponent<ARSelectionInteractable>();
+
+                // desotry object causes conflits. Deactivation simulates it
+                objectSelected.SetActive(false);
+                interactionManager.UnregisterInteractable(interactor);
+
+                objectSelected = null;
+            }
+
+            // set app state
             AppManager.Instance.SetAppState(AppState.Idle);
         }
 

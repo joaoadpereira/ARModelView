@@ -28,6 +28,9 @@ namespace Managers
         private bool showingInstructionsMenu = false;
         private bool showingObjectsMenu = false;
 
+        private GameObject currentObjectToInstantiate;
+
+
         [Header("Initial App Panel to show")]
         [SerializeField]
         private GameObject initialAppPanel;
@@ -68,7 +71,10 @@ namespace Managers
         [SerializeField]
         private GameObject[] objectsToInstantiate;
 
-        private GameObject currentObjectToInstantiate;
+        [Header("Object menu Buttons")]
+        [SerializeField]
+        private ButtonMenu deleteObjectButton;
+
 
         #endregion
 
@@ -161,8 +167,12 @@ namespace Managers
             // listen to object menu selected
             menuObjects.GetComponent<ObjectsMenu>().ObjectSelected += OnObjectMenuSelected;
 
-            //listen to app state change
+            // listen to app state change
             AppManager.Instance.StateChanged += OnChangeState;
+
+            // listen to delete obejct
+            deleteObjectButton.SetButton(() => OnDeleteObject(), false);
+
         }
 
         /// <summary>
@@ -394,6 +404,15 @@ namespace Managers
                     
 
             }
+        }
+
+        /// <summary>
+        /// Command to delete object
+        /// </summary>
+        private void OnDeleteObject()
+        {
+            //Communicate instruction
+            ARInteractionsManager.Instance.DeleteObject();
         }
 
         #endregion
