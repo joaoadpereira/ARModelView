@@ -9,6 +9,7 @@ using Whisper;
 using TMPro;
 using UnityEngine.UI;
 using Utils;
+using Enum;
 
 namespace Managers 
 { 
@@ -114,15 +115,12 @@ namespace Managers
 
             if (!microphoneRecord.IsRecording)
             {
-                Debug.Log("Recording");
-
                 text.text = "";
                 stream.StartStream();
                 microphoneRecord.StartRecord();
             }
             else
             {
-                Debug.Log("Processing");
                 microphoneRecord.StopRecord();
             }
                 
@@ -135,39 +133,51 @@ namespace Managers
             buttonText.text = recordText;
         }
 
+        /// <summary>
+        /// Handle the result of speech recognition 
+        /// </summary>
+        /// <param name="result"></param>
         private void OnResult(string result)
         {
+            // clean the result text
             text.text = commandSpeechText + " " + result;
-            string resultClean = result.Replace("!","").Replace("?","").Replace(".","").ToLower(); 
+            string resultClean = result.Replace("!","").Replace("?","").Replace(".","").ToLower();
 
-            //handle result
+            InteractionVoice? interactionVoiceRecognized = null; 
+
+            // handle result to command
             if (resultClean.Contains("rotate"))
             {
-                Debug.Log("rotating the object...");
-                ARInteractionsManager.Instance.InteractWithObject();
+                interactionVoiceRecognized = InteractionVoice.Rotate;
             } else if (resultClean.Contains("scale"))
             {
-                ARInteractionsManager.Instance.ScaleUp();
+                interactionVoiceRecognized = InteractionVoice.Scale;
             } else if (resultClean.Contains("forward"))
             {
-                ARInteractionsManager.Instance.Forward();
+                interactionVoiceRecognized = InteractionVoice.Forward;
             }
 
+            // communicate result if any command recognized
+            if (interactionVoiceRecognized.HasValue)
+            {
+                ARInteractionsManager.Instance.InteractWithObject(interactionVoiceRecognized);
+            }
+            
         }
 
         private void OnSegmentUpdated(WhisperResult segment)
         {
-            print($"Segment updated: {segment.Result}");
+            
         }
 
         private void OnSegmentFinished(WhisperResult segment)
         {
-            print($"Segment finished: {segment.Result}");
+
         }
 
         private void OnFinished(string finalResult)
         {
-            print("Stream finished!");
+
         }
 
         #endregion

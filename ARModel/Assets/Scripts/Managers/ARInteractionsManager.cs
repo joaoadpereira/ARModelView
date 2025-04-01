@@ -1,3 +1,4 @@
+using Enum;
 using Enums;
 using Managers;
 using System.Collections;
@@ -199,29 +200,26 @@ namespace Managers
 
         }
 
-        public void InteractWithObject(/*TOODO: Pass an Enum to command manipulation*/)
+        /// <summary>
+        /// Interact with the object on rotation, scale and moving forward
+        /// </summary>
+        /// <param name="interactionVoice"></param>
+        public void InteractWithObject(InteractionVoice? interactionVoice)
         {
-            if(objectSelected != null)
+            if (interactionVoice == null) return;
+
+            switch (interactionVoice)
             {
-                objectSelected.transform.Rotate(0, 45, 0);
-            }
-        }
-
-        public void Forward()
-        {
-            if (objectSelected != null)
-            {
-                objectSelected.transform.Translate(Vector3.forward);
-            }
-        }
-
-        public void ScaleUp()
-        {
-
-            if (objectSelected != null)
-            {
-
-                objectSelected.transform.localScale *= 2;
+                case InteractionVoice.Rotate:
+                    objectSelected.transform.Rotate(0, 45, 0);
+                    break;
+                case InteractionVoice.Scale:
+                    objectSelected.transform.localScale *= 1.2f;
+                    break;
+                case InteractionVoice.Forward:
+                default:
+                    objectSelected.transform.Translate(Vector3.forward);
+                    break;
             }
         }
 
