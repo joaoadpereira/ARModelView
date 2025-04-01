@@ -1,0 +1,95 @@
+fileFormatVersion: 2
+guid: 06586d83fdfb9e24d85ac4f0bd2af6d3
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Color_A01
+    second: {fileID: 2100000, guid: 0fa299beff962b246afc67f137767e14, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Color_L25
+    second: {fileID: 2100000, guid: 41a23c9a2d7a0194e89773ff3641af95, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GrisBosch
+    second: {fileID: 2100000, guid: e7fdf81e59e4da6459a43226f383efdc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RougeBosch
+    second: {fileID: 2100000, guid: 956b70983379e94459f831da22a7e44a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material
+    second: {fileID: 2100000, guid: ad04f8de92606fd499e0a3b663c8eeee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_0
+    second: {fileID: 2100000, guid: e9ff2dadba90f0547b0f285b8b0bb7d7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: material_1
+    second: {fileID: 2100000, guid: 1a88e3d72e9f6b34f9a8d2f1501fbcfd, type: 2}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 804e1ce4c496647cfa3f1a1134187c71, type: 3}
+  _removeEmptyRootObjects: 1
+  _scaleFactor: 1
+  _deduplicateResources: 0
+  _maximumLod: 300
+  _readWriteEnabled: 1
+  _generateColliders: 0
+  _swapUvs: 0
+  _generateLightmapUVs: 0
+  _importBlendShapeNames: 1
+  _blendShapeFrameWeight:
+    _option: 0
+    _multiplier: 1
+  _importNormals: 0
+  _importTangents: 0
+  _importCamera: 2
+  _importAnimations: 2
+  _mecanimHumanoidFlip: 0
+  _addAnimatorComponent: 0
+  _animationLoopTime: 1
+  _animationLoopPose: 0
+  _importMaterials: 1
+  _enableGpuInstancing: 0
+  _texturesReadWriteEnabled: 1
+  _generateMipMaps: 1
+  _useSceneNameIdentifier: 1
+  _textureCompression: -50
+  _gltfAsset: '<b>Generator: </b>https://3dviewer.net
+
+    <b>Version: </b>2.0
+
+'
+  optimizeGameObjects: 0
+  materials:
+  - {fileID: 3092439742945511283, guid: 06586d83fdfb9e24d85ac4f0bd2af6d3, type: 3}
+  - {fileID: 5884222491846866474, guid: 06586d83fdfb9e24d85ac4f0bd2af6d3, type: 3}
+  - {fileID: -5233882507482029292, guid: 06586d83fdfb9e24d85ac4f0bd2af6d3, type: 3}
+  - {fileID: 586645097001841572, guid: 06586d83fdfb9e24d85ac4f0bd2af6d3, type: 3}
+  - {fileID: -2840136634868304333, guid: 06586d83fdfb9e24d85ac4f0bd2af6d3, type: 3}
+  - {fileID: 7621062356886667783, guid: 06586d83fdfb9e24d85ac4f0bd2af6d3, type: 3}
+  - {fileID: -1302997617297325371, guid: 06586d83fdfb9e24d85ac4f0bd2af6d3, type: 3}
+  textures: []
+  hasSceneData: 1
+  hasAnimationData: 0
+  hasMaterialData: 1
+  hasTextureData: 0
+  animations: []
+  _extensions: []
+  _textures: []
+  _mainAssetIdentifier: scenes/Scene
+  _importPlugins: []
