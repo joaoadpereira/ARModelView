@@ -84,7 +84,8 @@ namespace utils
             // add rigidBody if Menu physics is activated
             if (InstructionsManager.Instance.PhysicsActivated)
             {
-                transform.AddComponent<Rigidbody>();
+                Rigidbody rg =transform.AddComponent<Rigidbody>();
+                rg.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             }
 
             // set name and time that was created
