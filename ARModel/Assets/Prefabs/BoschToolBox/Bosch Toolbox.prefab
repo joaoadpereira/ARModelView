@@ -907,6 +907,7 @@ MonoBehaviour:
   aRNote: {fileID: 2978720336695211710}
   textTitle: {fileID: 3556852054287601349}
   textContent: {fileID: 6508405283681457374}
+  objectType: 2
 --- !u!114 &5856755995102021378
 MonoBehaviour:
   m_ObjectHideFlags: 0

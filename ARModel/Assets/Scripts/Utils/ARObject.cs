@@ -44,6 +44,21 @@ namespace utils
         [SerializeField]
         private TMP_Text textContent;
 
+        [SerializeField]
+        private Object objectType;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Returns the type of this object
+        /// </summary>
+        public Object ObjectType
+        {
+            get { return objectType; }
+        }
+
         #endregion
 
         #region private methods
@@ -61,7 +76,7 @@ namespace utils
         private void Start()
         {
             // inform this object was created
-            ARInteractionsManager.Instance.ObjectAdded(this.gameObject);
+            ARInteractionsManager.Instance.ObjectAdded(this.gameObject, objectType);
 
             // activate ARNotes if Menu showARNotes is activated
             ShowHideARNote(InstructionsManager.Instance.ShowingARNotes);
@@ -73,8 +88,10 @@ namespace utils
             }
 
             // set name and time that was created
+            int numberOfObjectsOfThisType = ARInteractionsManager.Instance.NumberOfObjectsByType(this.ObjectType);
+
             string originalPrefabName = gameObject.name.Replace("(Clone)", "").Trim();
-            objectName = originalPrefabName + " " + ARInteractionsManager.Instance.NumberOfObjectsInScene.ToString();
+            objectName = originalPrefabName + " " + numberOfObjectsOfThisType.ToString();
             instantiateTime = DateTime.Now;
 
             //Set into title and textContent in ARNote

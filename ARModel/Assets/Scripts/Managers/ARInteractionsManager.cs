@@ -31,6 +31,8 @@ namespace Managers
         List<GameObject> objectsInScene = new List<GameObject>();
         private int numberOfObjectsInScene = 0;
 
+        private Dictionary<Object, int> numberOfObjectsInSceneByType = new Dictionary<Object, int>();
+
         [Header("Interaction Manager")]
         [SerializeField]
         private XRInteractionManager interactionManager;
@@ -63,7 +65,7 @@ namespace Managers
         public int NumberOfObjectsInScene
         {
             get { return numberOfObjectsInScene; }  
-        } 
+        }
 
         #endregion
 
@@ -88,6 +90,10 @@ namespace Managers
 
             // add Object to instantiate into ARPlacementinteractable
             aRPlacementInteractable.placementPrefab = objectToAR;
+
+            // set number of objects in scene by type
+            numberOfObjectsInSceneByType[Object.Drill] = 0;
+            numberOfObjectsInSceneByType[Object.Toolbox] = 0;
 
         }
 
@@ -122,12 +128,14 @@ namespace Managers
         /// Handles when an AR object was added in the scene
         /// </summary>
         /// <param name="ARObject"></param>
-        public void ObjectAdded(GameObject ARObject)
+        public void ObjectAdded(GameObject ARObject, Object objectType)
         {
             // add object to objects in scene
             objectsInScene.Add(ARObject);
 
             numberOfObjectsInScene++;
+
+            numberOfObjectsInSceneByType[objectType] += 1;
         }
 
         /// <summary>
@@ -189,6 +197,9 @@ namespace Managers
             // reset counting
             objectsInScene.Clear();
             numberOfObjectsInScene = 0;
+
+            numberOfObjectsInSceneByType[Object.Drill] = 0;
+            numberOfObjectsInSceneByType[Object.Toolbox] = 0;
         }
 
         public void SetObjectToInstantiate(GameObject otherObject)
@@ -258,9 +269,15 @@ namespace Managers
         {        
             if (objectSelected != null)
             {
-                IXRSelectInteractable interactor = objectSelected.GetComponent<ARSelectionInteractable>();
+                // count less one
+                numberOfObjectsInScene--;
+
+                Object objectType = objectSelected.GetComponent<ARObject>().ObjectType;
+                numberOfObjectsInSceneByType[objectType] -= 1;
 
                 // desotry object causes conflits. Deactivation simulates it
+                IXRSelectInteractable interactor = objectSelected.GetComponent<ARSelectionInteractable>();
+
                 objectSelected.SetActive(false);
                 interactionManager.UnregisterInteractable(interactor);
 
@@ -269,6 +286,16 @@ namespace Managers
 
             // set app state
             AppManager.Instance.SetAppState(AppState.Idle);
+        }
+
+        /// <summary>
+        /// Returns the number of objects based on given objectType
+        /// </summary>
+        /// <param name="objectType"></param>
+        /// <returns></returns>
+        public int NumberOfObjectsByType(Object objectType)
+        {
+            return numberOfObjectsInSceneByType[objectType];
         }
 
         #endregion
