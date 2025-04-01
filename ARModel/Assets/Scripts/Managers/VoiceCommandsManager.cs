@@ -116,6 +116,7 @@ namespace Managers
             {
                 Debug.Log("Recording");
 
+                text.text = "";
                 stream.StartStream();
                 microphoneRecord.StartRecord();
             }

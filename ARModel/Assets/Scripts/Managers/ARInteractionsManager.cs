@@ -83,6 +83,7 @@ namespace Managers
 
             // add Object to instantiate into ARPlacementinteractable
             aRPlacementInteractable.placementPrefab = objectToAR;
+
         }
 
         /// <summary>
@@ -220,9 +221,32 @@ namespace Managers
             }
         }
 
+        /// <summary>
+        /// Handle when object was selected.
+        /// Define object selected.
+        /// Change App state to Object Selection.
+        /// </summary>
+        /// <param name="obj"></param>
         public void ObjectWasSelected(GameObject obj)
         {
             objectSelected = obj;
+
+            //communicate obejct selected stae
+            AppManager.Instance.SetAppState(AppState.ObjectSelected);
+        }
+
+        /// <summary>
+        /// Handle when Object was unselected.
+        /// Remove object selection.
+        /// Change app state to Idle.
+        /// </summary>
+        /// <param name="obj"></param>
+        public void ObjectWasExited (GameObject obj)
+        {
+            objectSelected = null;
+
+            //communicate obejct selected stae
+            AppManager.Instance.SetAppState(AppState.Idle);
         }
 
         #endregion

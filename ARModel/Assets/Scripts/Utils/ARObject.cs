@@ -86,13 +86,30 @@ namespace utils
 
             // listen to when the object is selected
             aRSelectionInteractable.selectEntered.AddListener(OnObjectSelected);
+
+            // listen to when the object is unselected
+            aRSelectionInteractable.selectExited.AddListener(OnObjectSelecteExited);
+
         }
 
+        /// <summary>
+        /// Handle when this object is selected
+        /// </summary>
+        /// <param name="args"></param>
         private void OnObjectSelected(SelectEnterEventArgs args)
         {
             objectIsSelected = !objectIsSelected;
 
             ARInteractionsManager.Instance.ObjectWasSelected(this.gameObject);
+        }
+
+        /// <summary>
+        /// Handle when this object is unselected
+        /// </summary>
+        /// <param name="args"></param>
+        private void OnObjectSelecteExited(SelectExitEventArgs args)
+        {
+            ARInteractionsManager.Instance.ObjectWasExited(this.gameObject);
         }
 
         #endregion
