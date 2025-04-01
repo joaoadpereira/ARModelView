@@ -101,6 +101,11 @@ namespace utils
             objectIsSelected = !objectIsSelected;
 
             ARInteractionsManager.Instance.ObjectWasSelected(this.gameObject);
+
+            // to fix the bug, manually set arnote based on instructionsManager.showingARNotesMenu
+            bool showingARNotesMenu = InstructionsManager.Instance.ShowingARNotes;
+            ARInteractionsManager.Instance.ShowHideARNotes(showingARNotesMenu);
+            //aRNote.SetActive(showingARNotesMenu);
         }
 
         /// <summary>
@@ -110,6 +115,11 @@ namespace utils
         private void OnObjectSelecteExited(SelectExitEventArgs args)
         {
             ARInteractionsManager.Instance.ObjectWasExited(this.gameObject);
+
+            // to fix the bug, manually set arnote based on instructionsManager.showingARNotesMenu
+            bool showingARNotesMenu = InstructionsManager.Instance.ShowingARNotes;
+            ARInteractionsManager.Instance.ShowHideARNotes(showingARNotesMenu);
+            //aRNote.SetActive(showingARNotesMenu);
         }
 
         #endregion

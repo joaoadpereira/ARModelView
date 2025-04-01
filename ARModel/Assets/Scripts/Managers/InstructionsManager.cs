@@ -319,6 +319,9 @@ namespace Managers
                 AppManager.Instance.SetAppState(AppState.ShowingInstructions);
             }
 
+            // to fix AR Notes that are showing up unexpected
+            ARInteractionsManager.Instance.ShowHideARNotes(showingARNotesMenu);
+
         }
 
         /// <summary>
@@ -410,6 +413,9 @@ namespace Managers
         {
             //Communicate instruction
             ARInteractionsManager.Instance.DeleteObject();
+
+            // to fix AR Notes that are showing up unexpected
+            ARInteractionsManager.Instance.ShowHideARNotes(showingARNotesMenu);
         }
 
         #endregion
