@@ -111,8 +111,6 @@ namespace Managers
             // click in button 
             buttonMenu.ClickButton();
 
-            // TODO: after 3 seconds, stop recording
-
             if (!microphoneRecord.IsRecording)
             {
                 text.text = "";
@@ -181,5 +179,18 @@ namespace Managers
         }
 
         #endregion
+
+        #region public methods
+
+        /// <summary>
+        ///  Resets the text speech
+        /// </summary>
+        public void CleanTextSpeech()
+        {
+            text.text = "";
+        }
+
+        #endregion
+
     }
 }

@@ -244,8 +244,11 @@ namespace Managers
         {
             objectSelected = obj;
 
-            //communicate obejct selected stae
+            // communicate obejct selected stae
             AppManager.Instance.SetAppState(AppState.ObjectSelected);
+
+            // reset previous text speech
+            VoiceCommandsManager.Instance.CleanTextSpeech();
         }
 
         /// <summary>
