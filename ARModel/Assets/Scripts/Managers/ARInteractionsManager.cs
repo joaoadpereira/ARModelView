@@ -24,6 +24,7 @@ namespace Managers
 
         // condition case an object has been selected
         private bool objectHasBeenSelected = false;
+        private GameObject objectSelected = null;
 
         // keep track of all objects added into the scene
         List<GameObject> objectsInScene = new List<GameObject>();
@@ -191,6 +192,29 @@ namespace Managers
             // add Object to instantiate into ARPlacementinteractable
             aRPlacementInteractable.placementPrefab = objectToAR;
 
+        }
+
+        public void InteractWithObject(/*TOODO: Pass an Enum to command manipulation*/)
+        {
+            if(objectSelected != null)
+            {
+                objectSelected.transform.Rotate(0, 45, 0);
+            }
+        }
+
+        public void ScaleUp()
+        {
+
+            if (objectSelected != null)
+            {
+
+                objectSelected.transform.localScale *= 2;
+            }
+        }
+
+        public void ObjectWasSelected(GameObject obj)
+        {
+            objectSelected = obj;
         }
 
         #endregion
