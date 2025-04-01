@@ -28,6 +28,9 @@ namespace Managers
         private bool showingInstructionsMenu = false;
         private bool showingObjectsMenu = false;
 
+        private GameObject currentObjectToInstantiate;
+
+
         [Header("Initial App Panel to show")]
         [SerializeField]
         private GameObject initialAppPanel;
@@ -44,7 +47,11 @@ namespace Managers
         [SerializeField]
         private Button closeInstructionsButton;
 
-        [Header("Menu buttons")]
+        [Header("Menu")]
+        [SerializeField]
+        private GameObject mainMenu;
+        [SerializeField]
+        private GameObject objectMenu;
         [SerializeField]
         private ButtonMenu seeHideARNotesButton;
         [SerializeField]
@@ -64,7 +71,10 @@ namespace Managers
         [SerializeField]
         private GameObject[] objectsToInstantiate;
 
-        private GameObject currentObjectToInstantiate;
+        [Header("Object menu Buttons")]
+        [SerializeField]
+        private ButtonMenu deleteObjectButton;
+
 
         #endregion
 
@@ -137,6 +147,7 @@ namespace Managers
 
             // hide initially the menu object
             menuObjects.SetActive(false);
+            objectMenu.SetActive(false);
 
             // add listners to instructions panel
             SetInitialPanel();
@@ -155,8 +166,19 @@ namespace Managers
 
             // listen to object menu selected
             menuObjects.GetComponent<ObjectsMenu>().ObjectSelected += OnObjectMenuSelected;
+
+            // listen to app state change
+            AppManager.Instance.StateChanged += OnChangeState;
+
+            // listen to delete obejct
+            deleteObjectButton.SetButton(() => OnDeleteObject(), false);
+
         }
 
+        /// <summary>
+        /// Defines the object to instantiate
+        /// </summary>
+        /// <param name="objectSelected"></param>
         private void OnObjectMenuSelected(Object objectSelected)
         {
             // receive object selected 
@@ -360,6 +382,37 @@ namespace Managers
             //reset buttons
             previousInstructionButton.gameObject.SetActive(false);
             forwardInstructionButton.gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Handles the menu based on app state
+        /// </summary>
+        /// <param name="appState"></param>
+        private void OnChangeState(AppState appState)
+        {
+            switch (appState)
+            {
+                case AppState.ObjectSelected:
+                    objectMenu.SetActive(true);
+                    mainMenu.SetActive(false);
+                    break;
+                case AppState.Idle:
+                default:
+                    objectMenu.SetActive(false);
+                    mainMenu.SetActive(true); 
+                    break;
+                    
+
+            }
+        }
+
+        /// <summary>
+        /// Command to delete object
+        /// </summary>
+        private void OnDeleteObject()
+        {
+            //Communicate instruction
+            ARInteractionsManager.Instance.DeleteObject();
         }
 
         #endregion

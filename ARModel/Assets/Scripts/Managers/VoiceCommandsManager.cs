@@ -116,6 +116,7 @@ namespace Managers
             {
                 Debug.Log("Recording");
 
+                text.text = "";
                 stream.StartStream();
                 microphoneRecord.StartRecord();
             }
@@ -147,6 +148,9 @@ namespace Managers
             } else if (resultClean.Contains("scale"))
             {
                 ARInteractionsManager.Instance.ScaleUp();
+            } else if (resultClean.Contains("forward"))
+            {
+                ARInteractionsManager.Instance.Forward();
             }
 
         }

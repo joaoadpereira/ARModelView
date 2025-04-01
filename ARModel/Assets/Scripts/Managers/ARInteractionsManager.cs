@@ -29,7 +29,11 @@ namespace Managers
         // keep track of all objects added into the scene
         List<GameObject> objectsInScene = new List<GameObject>();
         private int numberOfObjectsInScene = 0;
-        
+
+        [Header("Interaction Manager")]
+        [SerializeField]
+        private XRInteractionManager interactionManager;
+
         [Header("AR Placement Interactablein scene")]
         [SerializeField]
         private ARPlacementInteractable aRPlacementInteractable;
@@ -83,6 +87,7 @@ namespace Managers
 
             // add Object to instantiate into ARPlacementinteractable
             aRPlacementInteractable.placementPrefab = objectToAR;
+
         }
 
         /// <summary>
@@ -202,6 +207,14 @@ namespace Managers
             }
         }
 
+        public void Forward()
+        {
+            if (objectSelected != null)
+            {
+                objectSelected.transform.Translate(Vector3.forward);
+            }
+        }
+
         public void ScaleUp()
         {
 
@@ -212,9 +225,52 @@ namespace Managers
             }
         }
 
+        /// <summary>
+        /// Handle when object was selected.
+        /// Define object selected.
+        /// Change App state to Object Selection.
+        /// </summary>
+        /// <param name="obj"></param>
         public void ObjectWasSelected(GameObject obj)
         {
             objectSelected = obj;
+
+            //communicate obejct selected stae
+            AppManager.Instance.SetAppState(AppState.ObjectSelected);
+        }
+
+        /// <summary>
+        /// Handle when Object was unselected.
+        /// Remove object selection.
+        /// Change app state to Idle.
+        /// </summary>
+        /// <param name="obj"></param>
+        public void ObjectWasExited (GameObject obj)
+        {
+            objectSelected = null;
+
+            //communicate obejct selected stae
+            AppManager.Instance.SetAppState(AppState.Idle);
+        }
+
+        /// <summary>
+        /// deletes the object selected
+        /// </summary>
+        public void DeleteObject()
+        {        
+            if (objectSelected != null)
+            {
+                IXRSelectInteractable interactor = objectSelected.GetComponent<ARSelectionInteractable>();
+
+                // desotry object causes conflits. Deactivation simulates it
+                objectSelected.SetActive(false);
+                interactionManager.UnregisterInteractable(interactor);
+
+                objectSelected = null;
+            }
+
+            // set app state
+            AppManager.Instance.SetAppState(AppState.Idle);
         }
 
         #endregion
