@@ -23,8 +23,6 @@ namespace Managers
 
         private string recordText = "Click to speak commands";
         private string stopRecordingText = "Stop recording";
-        private string listeningText = "Listening...";
-        private string processingText = "Processing...";
         private string commandSpeechText = "COMMAND: ";
 
         private ButtonMenu buttonMenu;
