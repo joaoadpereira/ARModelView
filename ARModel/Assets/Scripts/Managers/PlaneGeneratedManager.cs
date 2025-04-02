@@ -11,6 +11,8 @@ namespace Managers
 {
     /// <summary>
     /// Gets and handles the information about ARPlanes generated
+    /// Classifies each plane by wall, floor or other surfaces
+    /// It sets app state to initializing after cheking if device is AR ready on Start()
     /// </summary>
     public class PlaneGeneratedManager : MonoBehaviour
     {
@@ -81,7 +83,7 @@ namespace Managers
 
             if (aRPlaneManager != null)
             {
-                // listen to ARPlanes have been added, updated or removed
+                // listen to ARPlanes when they have been added, updated or removed
                 aRPlaneManager.planesChanged += PlanesChanged;
             } 
             else
@@ -95,17 +97,15 @@ namespace Managers
             // Define id device supports occlusion
             deviceSupportsOcclusion = DeviceProperties.Instance.SupportsOcclusion;
 
-            // check if device has AR support
+            // check if device has AR support. On callback, set app state to Initializing
             bool? supportsAR = null;
             DeviceProperties.Instance.SupportsAR((support) => { 
                 supportsAR = support; 
-                Debug.Log("SupportsAR: " + supportsAR.ToString());
                 AppStateManager.Instance.SetAppState(AppState.Initializing);
             });
 
             
         }
-
 
         /// <summary>
         /// Handles the logic when AR planes have changed (been added, updated or removed)
@@ -117,7 +117,7 @@ namespace Managers
             bool showARPlanes = MenuManager.Instance.ShowingARPlanesMenu;
 
             // handle added new AR planes
-            allARPlanes = new List<ARPlane> ();
+            allARPlanes = new List<ARPlane>();
 
             // track all ARplane
             allARPlanes.AddRange(args.added);

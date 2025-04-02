@@ -11,7 +11,8 @@ using Utils;
 namespace Managers
 { 
     /// <summary>
-    /// Handles the initial instructions for the user
+    /// Handles the menu buttons and logic
+    /// Handles the instructions for the user
     /// </summary>
     public class MenuManager : MonoBehaviour
     {
@@ -28,8 +29,8 @@ namespace Managers
         private bool showingInstructionsMenu = false;
         private bool showingObjectsMenu = false;
 
+        // defines the object to instantiate
         private GameObject currentObjectToInstantiate;
-
 
         [Header("Initial App Panel to show")]
         [SerializeField]
@@ -81,7 +82,7 @@ namespace Managers
         #region properties
 
         /// <summary>
-        /// Property to access the Singleton instance of InstructionsManager
+        /// Property to access the Singleton instance of MenuManager
         /// </summary>
         public static MenuManager Instance 
         { 
@@ -117,7 +118,7 @@ namespace Managers
 
         #endregion
 
-        #region private methods
+        #region Menu Button logic
 
         private void Awake()
         {
@@ -191,6 +192,7 @@ namespace Managers
                     currentObjectToInstantiate = objectsToInstantiate[1];
                     break;
                 case Object.None:
+                default:
                     break;
             }
 
@@ -221,6 +223,9 @@ namespace Managers
 
         }
 
+        /// <summary>
+        /// Shows or hides the objects menu
+        /// </summary>
         private void OnShowOtherObjectsMenu()
         {
             showingObjectsMenu = !showingObjectsMenu;
@@ -246,6 +251,22 @@ namespace Managers
         {
             ARInteractionsManager.Instance.DeleteAllObjects();
         }
+
+        /// <summary>
+        /// Command to delete object
+        /// </summary>
+        private void OnDeleteObject()
+        {
+            //Communicate instruction
+            ARInteractionsManager.Instance.DeleteObject();
+
+            // to fix AR Notes that are showing up unexpected
+            ARInteractionsManager.Instance.ShowHideARNotes(showingARNotesMenu);
+        }
+
+        #endregion
+
+        #region Initial Panel and Instructions
 
         /// <summary>
         ///  Add listners to each instructions button control
@@ -277,7 +298,6 @@ namespace Managers
                     // When click the button, show panel instructions and hide the initialAppPanel
                     initalButton.onClick.AddListener(() => 
                     {
-                        //ShowUserInstructionsPanel(true);
                         seeInstructionsButton.ClickButton(() => ShowUserInstructionsPanel());
 
                         // hide the initialAppPanel
@@ -398,27 +418,17 @@ namespace Managers
                 case AppState.ObjectSelected:
                     objectMenu.SetActive(true);
                     mainMenu.SetActive(false);
+                    menuObjects.SetActive(false);
                     break;
                 case AppState.Idle:
                 default:
                     objectMenu.SetActive(false);
                     mainMenu.SetActive(true); 
+                    menuObjects.SetActive(showingObjectsMenu);
                     break;
                     
 
             }
-        }
-
-        /// <summary>
-        /// Command to delete object
-        /// </summary>
-        private void OnDeleteObject()
-        {
-            //Communicate instruction
-            ARInteractionsManager.Instance.DeleteObject();
-
-            // to fix AR Notes that are showing up unexpected
-            ARInteractionsManager.Instance.ShowHideARNotes(showingARNotesMenu);
         }
 
         #endregion

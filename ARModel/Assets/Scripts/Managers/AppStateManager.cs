@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Managers
 { 
     /// <summary>
-    /// Main App Manager to handle state machine
+    /// Handles the state machine of the app
     /// </summary>
     public class AppStateManager : MonoBehaviour
     {
@@ -23,7 +23,7 @@ namespace Managers
         #region properties
 
         /// <summary>
-        /// Property to access the Singleton instance of AppManager
+        /// Property to access the Singleton instance of AppStateManager
         /// </summary>
         public static AppStateManager Instance
         {

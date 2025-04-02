@@ -13,7 +13,9 @@ using utils;
 namespace Managers 
 { 
     /// <summary>
-    /// Handles the placing, moving, rotation and scaling of AR objects with AR planes
+    /// Handles Object placing in scene
+    /// Handles the placing, moving, rotation and scaling of Objects
+    /// Tracks the amount of objects in scene by type
     /// </summary>
     public class ARInteractionsManager : MonoBehaviour
     {
@@ -24,12 +26,10 @@ namespace Managers
         private bool canARTouch = false;
 
         // condition case an object has been selected
-        private bool objectHasBeenSelected = false;
         private GameObject objectSelected = null;
 
         // keep track of all objects added into the scene
         List<GameObject> objectsInScene = new List<GameObject>();
-        private int numberOfObjectsInScene = 0;
 
         private Dictionary<Object, int> numberOfObjectsInSceneByType = new Dictionary<Object, int>();
 
@@ -57,14 +57,6 @@ namespace Managers
         public static ARInteractionsManager Instance
         {
             get { return instance; }
-        }
-
-        /// <summary>
-        /// Returns the number of objects in scene
-        /// </summary>
-        public int NumberOfObjectsInScene
-        {
-            get { return numberOfObjectsInScene; }  
         }
 
         #endregion
@@ -107,7 +99,6 @@ namespace Managers
             bool userSelectedAnObject = appState == AppState.ObjectSelected;
 
             canARTouch = canAddAndSelectObjects || userSelectedAnObject;
-            objectHasBeenSelected = userSelectedAnObject;
 
             // enable or disable interaction with objects 
             aRPlacementInteractable.enabled = canARTouch;
@@ -132,8 +123,6 @@ namespace Managers
         {
             // add object to objects in scene
             objectsInScene.Add(ARObject);
-
-            numberOfObjectsInScene++;
 
             numberOfObjectsInSceneByType[objectType] += 1;
         }
@@ -194,14 +183,17 @@ namespace Managers
                 Destroy(aRObject);
             }
 
-            // reset counting
+            // reset object tracking
             objectsInScene.Clear();
-            numberOfObjectsInScene = 0;
-
+            
             numberOfObjectsInSceneByType[Object.Drill] = 0;
             numberOfObjectsInSceneByType[Object.Toolbox] = 0;
         }
 
+        /// <summary>
+        /// Sets the next Object that will be added into the scene
+        /// </summary>
+        /// <param name="otherObject"></param>
         public void SetObjectToInstantiate(GameObject otherObject)
         {
             objectToAR = otherObject;
@@ -219,7 +211,7 @@ namespace Managers
         {
             if (interactionVoice == null) return;
 
-            switch (interactionVoice)
+           switch (interactionVoice)
             {
                 case InteractionVoice.Rotate:
                     objectSelected.transform.Rotate(0, 45, 0);
@@ -244,7 +236,7 @@ namespace Managers
         {
             objectSelected = obj;
 
-            // communicate obejct selected stae
+            // communicate object selected state
             AppStateManager.Instance.SetAppState(AppState.ObjectSelected);
 
             // reset previous text speech
@@ -272,9 +264,6 @@ namespace Managers
         {        
             if (objectSelected != null)
             {
-                // count less one
-                numberOfObjectsInScene--;
-
                 Object objectType = objectSelected.GetComponent<ARObject>().ObjectType;
                 numberOfObjectsInSceneByType[objectType] -= 1;
 
