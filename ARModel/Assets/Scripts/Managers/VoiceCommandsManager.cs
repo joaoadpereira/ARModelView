@@ -93,9 +93,6 @@ namespace Managers
             // set whisper and listners 
             stream = await whisper.CreateStream(microphoneRecord);
             stream.OnResultUpdated += OnResult;
-            stream.OnSegmentUpdated += OnSegmentUpdated;
-            stream.OnSegmentFinished += OnSegmentFinished;
-            stream.OnStreamFinished += OnFinished;
 
             microphoneRecord.OnRecordStop += OnRecordStop;
             button.onClick.AddListener(OnButtonPressed);
@@ -119,8 +116,7 @@ namespace Managers
             {
                 microphoneRecord.StopRecord();
             }
-                
-
+            
             buttonText.text = microphoneRecord.IsRecording ? stopRecordingText : recordText;
         }
 
@@ -135,6 +131,8 @@ namespace Managers
         /// <param name="result"></param>
         private void OnResult(string result)
         {
+            Debug.Log("result: " + result);
+
             // clean the result text
             text.text = commandSpeechText + " " + result;
             string resultClean = result.Replace("!","").Replace("?","").Replace(".","").ToLower();
@@ -159,21 +157,6 @@ namespace Managers
                 ARInteractionsManager.Instance.InteractWithObject(interactionVoiceRecognized);
             }
             
-        }
-
-        private void OnSegmentUpdated(WhisperResult segment)
-        {
-            
-        }
-
-        private void OnSegmentFinished(WhisperResult segment)
-        {
-
-        }
-
-        private void OnFinished(string finalResult)
-        {
-
         }
 
         #endregion
