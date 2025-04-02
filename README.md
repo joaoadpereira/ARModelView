@@ -14,7 +14,7 @@ Once the instructions panel is closed, the user can tap on AR planes to add obje
 - Reopen the instructions panel
 
   
-![Screenshot_20250402_143044_AR Application Development](https://github.com/user-attachments/assets/3075c724-4b3e-4d8c-818c-f9e7f092b6ee)
+![Screenshot_20250402_143044_AR Application Development](https://github.com/user-attachments/assets/3075c724-4b3e-4d8c-818c-f9e7f092b6ee = 500x300)
 
 When an object is selected (by tapping on it), the user can:
 - rotate, scale and move the obejct with the fingers interaction.
