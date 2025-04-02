@@ -1,3 +1,4 @@
+using Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -98,7 +99,8 @@ namespace Managers
             bool? supportsAR = null;
             DeviceProperties.Instance.SupportsAR((support) => { 
                 supportsAR = support; 
-                Debug.Log("SupportsAR: " + supportsAR.ToString()); 
+                Debug.Log("SupportsAR: " + supportsAR.ToString());
+                AppManager.Instance.SetAppState(AppState.Initializing);
             });
 
             
@@ -112,7 +114,7 @@ namespace Managers
         private void PlanesChanged(ARPlanesChangedEventArgs args)
         {
             // get menu see/hide planes state
-            bool showARPlanes = InstructionsManager.Instance.ShowingARPlanesMenu;
+            bool showARPlanes = MenuManager.Instance.ShowingARPlanesMenu;
 
             // handle added new AR planes
             allARPlanes = new List<ARPlane> ();

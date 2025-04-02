@@ -79,10 +79,10 @@ namespace utils
             ARInteractionsManager.Instance.ObjectAdded(this.gameObject, objectType);
 
             // activate ARNotes if Menu showARNotes is activated
-            ShowHideARNote(InstructionsManager.Instance.ShowingARNotes);
+            ShowHideARNote(MenuManager.Instance.ShowingARNotes);
 
             // add rigidBody if Menu physics is activated
-            if (InstructionsManager.Instance.PhysicsActivated)
+            if (MenuManager.Instance.PhysicsActivated)
             {
                 Rigidbody rg =transform.AddComponent<Rigidbody>();
                 rg.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
@@ -100,7 +100,7 @@ namespace utils
             textContent.text = "The " + objectName + " object was added to the world at " + instantiateTime.ToString("HH:mm:ss") + ".";
 
             // set active or not if Menu showing objects is activated
-            this.gameObject.SetActive(InstructionsManager.Instance.ShowingARPlanesMenu);
+            this.gameObject.SetActive(MenuManager.Instance.ShowingARPlanesMenu);
 
             // listen to when the object is selected
             aRSelectionInteractable.selectEntered.AddListener(OnObjectSelected);
@@ -121,7 +121,7 @@ namespace utils
             ARInteractionsManager.Instance.ObjectWasSelected(this.gameObject);
 
             // to fix the bug, manually set arnote based on instructionsManager.showingARNotesMenu
-            bool showingARNotesMenu = InstructionsManager.Instance.ShowingARNotes;
+            bool showingARNotesMenu = MenuManager.Instance.ShowingARNotes;
             ARInteractionsManager.Instance.ShowHideARNotes(showingARNotesMenu);
             //aRNote.SetActive(showingARNotesMenu);
         }
@@ -135,7 +135,7 @@ namespace utils
             ARInteractionsManager.Instance.ObjectWasExited(this.gameObject);
 
             // to fix the bug, manually set arnote based on instructionsManager.showingARNotesMenu
-            bool showingARNotesMenu = InstructionsManager.Instance.ShowingARNotes;
+            bool showingARNotesMenu = MenuManager.Instance.ShowingARNotes;
             ARInteractionsManager.Instance.ShowHideARNotes(showingARNotesMenu);
             //aRNote.SetActive(showingARNotesMenu);
         }

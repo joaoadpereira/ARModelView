@@ -13,10 +13,10 @@ namespace Managers
     /// <summary>
     /// Handles the initial instructions for the user
     /// </summary>
-    public class InstructionsManager : MonoBehaviour
+    public class MenuManager : MonoBehaviour
     {
         #region fields
-        private static InstructionsManager instance;
+        private static MenuManager instance;
 
         // InstructionsData object
         private InstructionData instructionData;
@@ -83,7 +83,7 @@ namespace Managers
         /// <summary>
         /// Property to access the Singleton instance of InstructionsManager
         /// </summary>
-        public static InstructionsManager Instance 
+        public static MenuManager Instance 
         { 
             get 
             {
@@ -392,6 +392,9 @@ namespace Managers
         {
             switch (appState)
             {
+                case AppState.Initializing:
+                    SetInitialAppPanel();
+                    break;
                 case AppState.ObjectSelected:
                     objectMenu.SetActive(true);
                     mainMenu.SetActive(false);
@@ -416,18 +419,6 @@ namespace Managers
 
             // to fix AR Notes that are showing up unexpected
             ARInteractionsManager.Instance.ShowHideARNotes(showingARNotesMenu);
-        }
-
-        #endregion
-
-        #region public methods
-
-        /// <summary>
-        /// Handle the instructions panel
-        /// </summary>
-        public void HandleWelcomeApp()
-        {
-            SetInitialAppPanel();
         }
 
         #endregion

@@ -83,7 +83,7 @@ namespace Managers
             {
                 case AppState.Initializing:
                     Debug.Log("Initializing");
-                    InstructionsManager.Instance.HandleWelcomeApp();
+                    //MenuManager.Instance.HandleWelcomeApp();
                     break;
                 case AppState.ShowingInstructions:
                     Debug.Log("ShowingInstructions");
