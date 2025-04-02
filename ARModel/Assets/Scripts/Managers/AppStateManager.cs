@@ -9,10 +9,10 @@ namespace Managers
     /// <summary>
     /// Main App Manager to handle state machine
     /// </summary>
-    public class AppManager : MonoBehaviour
+    public class AppStateManager : MonoBehaviour
     {
         #region fields
-        private static AppManager instance;
+        private static AppStateManager instance;
 
         //current app state
         private AppState currentAppState;
@@ -25,7 +25,7 @@ namespace Managers
         /// <summary>
         /// Property to access the Singleton instance of AppManager
         /// </summary>
-        public static AppManager Instance
+        public static AppStateManager Instance
         {
             get { return instance; }
         }
@@ -61,47 +61,6 @@ namespace Managers
             else
             {
                 instance = this;
-            }
-
-            // listen for app state changes
-            onStateChange += OnStateChange;
-        }
-
-        private void Start()
-        {
-            // Set initial App State
-            SetAppState(AppState.Initializing);
-        }
-
-        /// <summary>
-        /// Handles the state change
-        /// </summary>
-        /// <param name="appState"></param>
-        private void OnStateChange(AppState appState)
-        {
-            switch (appState)
-            {
-                case AppState.Initializing:
-                    Debug.Log("Initializing");
-                    //MenuManager.Instance.HandleWelcomeApp();
-                    break;
-                case AppState.ShowingInstructions:
-                    Debug.Log("ShowingInstructions");
-                    break;
-                case AppState.Idle:
-                    Debug.Log("Idle");
-                    break;
-                case AppState.PlacingObject:
-                    Debug.Log("PlacingObject");
-                    break;
-                case AppState.ObjectSelected:
-                    Debug.Log("ObjectSelected");
-                    break;
-                case AppState.ManipulatingObject:
-                    Debug.Log("ManipulatingObject");
-                    break;
-                default:
-                    break;
             }
         }
 

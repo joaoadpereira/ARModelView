@@ -100,7 +100,7 @@ namespace Managers
             DeviceProperties.Instance.SupportsAR((support) => { 
                 supportsAR = support; 
                 Debug.Log("SupportsAR: " + supportsAR.ToString());
-                AppManager.Instance.SetAppState(AppState.Initializing);
+                AppStateManager.Instance.SetAppState(AppState.Initializing);
             });
 
             

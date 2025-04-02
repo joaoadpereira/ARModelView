@@ -168,7 +168,7 @@ namespace Managers
             menuObjects.GetComponent<ObjectsMenu>().ObjectSelected += OnObjectMenuSelected;
 
             // listen to app state change
-            AppManager.Instance.StateChanged += OnChangeState;
+            AppStateManager.Instance.StateChanged += OnChangeState;
 
             // listen to delete obejct
             deleteObjectButton.SetButton(() => OnDeleteObject(), false);
@@ -311,12 +311,12 @@ namespace Managers
             if (!showingInstructionsMenu)
             {
                 // change state to idle 
-                AppManager.Instance.SetAppState(AppState.Idle);
+                AppStateManager.Instance.SetAppState(AppState.Idle);
             }
             else
             {
                 // change state to showing instructions
-                AppManager.Instance.SetAppState(AppState.ShowingInstructions);
+                AppStateManager.Instance.SetAppState(AppState.ShowingInstructions);
             }
 
             // to fix AR Notes that are showing up unexpected

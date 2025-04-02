@@ -86,7 +86,7 @@ namespace Managers
         private void Start()
         {
             // add method to listen to app state change
-            AppManager.Instance.StateChanged += EnableObjectPlacing;
+            AppStateManager.Instance.StateChanged += EnableObjectPlacing;
 
             // add Object to instantiate into ARPlacementinteractable
             aRPlacementInteractable.placementPrefab = objectToAR;
@@ -245,7 +245,7 @@ namespace Managers
             objectSelected = obj;
 
             // communicate obejct selected stae
-            AppManager.Instance.SetAppState(AppState.ObjectSelected);
+            AppStateManager.Instance.SetAppState(AppState.ObjectSelected);
 
             // reset previous text speech
             VoiceCommandsManager.Instance.CleanTextSpeech();
@@ -262,7 +262,7 @@ namespace Managers
             objectSelected = null;
 
             //communicate obejct selected stae
-            AppManager.Instance.SetAppState(AppState.Idle);
+            AppStateManager.Instance.SetAppState(AppState.Idle);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Managers
             }
 
             // set app state
-            AppManager.Instance.SetAppState(AppState.Idle);
+            AppStateManager.Instance.SetAppState(AppState.Idle);
         }
 
         /// <summary>
