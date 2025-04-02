@@ -74,6 +74,5 @@ The objects used in the app were downloaded from the following sources:
 
 Implementing voice commands was a challenging task due to the limited availability of suitable libraries for Android in Unity. After some research and testing, the [Whisper.unity](https://github.com/Macoron/whisper.unity) library seemed to facilitate the feature in question. The approach involved recording speech, converting it to text and recognizing specific keywords to trigger commands for the selected object. However, it seems that in the Android device tested, the speech-to-text conversion takes a few seconds due to the Whisper's processing time. A tiny model was also used for faster but less accurate results. Despite this, this was the best possible approach for this Android device.  
 
-
-
+The project was developed with `Unity 2022.3.15f1` version.
 
